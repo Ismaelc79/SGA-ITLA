@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\Reservations\" />
+    <Folder Include="Rules\" />
   </ItemGroup>
 
 </Project>

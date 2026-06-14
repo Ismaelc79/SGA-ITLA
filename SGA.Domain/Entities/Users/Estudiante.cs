@@ -4,7 +4,9 @@ using System.Text;
 
 namespace SGA.Domain.Entities.Users
 {
-    internal class Estudiante
+    public class Estudiante
     {
+        string? MatriculaEstudiante { get; set; }
+
     }
 }
