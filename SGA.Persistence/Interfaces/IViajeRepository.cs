@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Entities.Trip;
+using SGA.Persistence.Repository.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;

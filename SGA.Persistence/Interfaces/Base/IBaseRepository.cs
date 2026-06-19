@@ -1,5 +1,4 @@
-﻿
-namespace SGA.Domain.Repository
+﻿namespace SGA.Persistence.Repository.Base
 {
     public interface IBaseRepository<T>
     {
