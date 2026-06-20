@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SGA.Domain.Repository
+namespace SGA.Persistence.Interfaces.Autorizations
 {
-    internal interface IAutorizacionRepository
+    internal class IPagoRepository
     {
     }
 }
