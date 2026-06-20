@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Base;
 
 namespace SGA.Domain.Entities.Users
 {
-    internal class Empleado
+    public class Empleado : AuditEntity
     {
+        public int EmpleadoId { get; set; }
+        public string Nombre { get; set; }
+        public string Identificacion { get; set; }
+        public string Cargo { get; set; }
+        public string Departamento { get; set; }
     }
 }

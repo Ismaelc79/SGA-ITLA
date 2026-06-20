@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Base;
 
 namespace SGA.Domain.Entities.Configuration
 {
-    internal class Parada
+    public class Parada : AuditEntity
     {
+        public int ParadaId { get; set; }
+        public int RutaId { get; set; }
+        public string Nombre { get; set; }
+        public string Ubicacion { get; set; }
+        public string ParadaOrden { get; set; }
+        public string Estado { get; set; }
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Base;
 
 namespace SGA.Domain.Entities.Users
 {
-    public class Estudiante
+    public class Estudiante : AuditEntity
     {
-        string? MatriculaEstudiante { get; set; }
+        public int EstudianteId { get; set; }
+        public string Nombre { get; set; }
+        public string Carrera { get; set; }
+        public string PeriodoAcademico { get; set; }
+        public string Estado { get; set; }
 
     }
 }
