@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SGA.Domain.Repository
+namespace SGA.Persistence.Interfaces.Users
 {
-    internal interface IIncidenciaRepository
+    internal class IRolRepository
     {
     }
 }

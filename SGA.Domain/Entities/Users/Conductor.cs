@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Base;
 
 namespace SGA.Domain.Entities.Users
 {
-    internal class Conductor
+    public class Conductor : AuditEntity
     {
+        public int ConductorId { get; set; }
+        public string Nombre { get; set; }
+        public string Identificacion { get; set; }
+        public string EstadoConductor { get; set; }
     }
 }
