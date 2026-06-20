@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Base;
 
 namespace SGA.Domain.Entities.Configuration
 {
-    public class Bus
+    public class Bus : AuditEntity
     {
-        public int Id { get; set; }
-
-        public string Placa { get; set; } = string.Empty;
-
+        public int AutobusId { get; set; }
+        public int ConductorId { get; set; }
+        public string Placa { get; set; }
         public int Capacidad { get; set; }
+        public string Estado { get; set; }
+
     }
 }
