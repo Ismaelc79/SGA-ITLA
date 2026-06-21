@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\" />
+  </ItemGroup>
+
 </Project>

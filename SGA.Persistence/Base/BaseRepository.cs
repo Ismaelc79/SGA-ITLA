@@ -1,8 +1,8 @@
-﻿
-namespace SGA.Domain.Repository
+﻿namespace SGA.Persistence.Repository.Base
 {
-    public interface IBaseRepository<T>
+    public interface BaseRepository<T> where T : class
     {
+
         Task<T?> GetByIdAsync(int id);
 
         Task<IEnumerable<T>> GetAllAsync();
