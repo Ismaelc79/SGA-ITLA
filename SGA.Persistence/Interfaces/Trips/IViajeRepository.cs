@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SGA.Persistence.Interfaces.Trips
 {
-    public interface IViajeRepository: IBaseRepository<Viaje>
+    public interface IViajeRepository: BaseRepository<Viaje>
     {
 
     }

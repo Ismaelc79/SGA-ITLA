@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SGA.Persistence.Interfaces.Users
+﻿namespace SGA.Persistence.Interfaces.Users
 {
-    internal class IUsuarioRepository
+    public interface IUsuarioRepository
     {
     }
 }
