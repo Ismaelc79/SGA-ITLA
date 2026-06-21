@@ -33,8 +33,8 @@ namespace SGA.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Autorizacion>()
-                .ToTable("Autorizacion");
+            modelBuilder.Entity<Autorizacion>().ToTable("Autorizacion");
+
         }
 
 
