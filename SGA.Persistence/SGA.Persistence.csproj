@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
+    <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
   </ItemGroup>
 
 </Project>
