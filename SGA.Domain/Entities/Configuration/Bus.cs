@@ -1,14 +1,14 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Enums;
 
 namespace SGA.Domain.Entities.Configuration
 {
     public class Bus : AuditEntity
     {
-        public int AutobusId { get; set; }
         public int ConductorId { get; set; }
         public string Placa { get; set; }
         public int Capacidad { get; set; }
-        public string Estado { get; set; }
+        public EstadoBus EstadoBus { get; set; }
 
     }
 }
