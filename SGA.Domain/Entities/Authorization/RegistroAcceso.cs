@@ -4,7 +4,6 @@ namespace SGA.Domain.Entities.Authorization
 {
     public class RegistroAcceso : AuditEntity
     {
-        public int AccesoId { get; set; }
         public int ViajeId { get; set; }
         public int UsuarioId { get; set; }
         public int AutorizacionId { get; set; }
