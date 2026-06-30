@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SGA.Persistence.Interfaces.Autorizations
 {
-    public interface IRegistroAccesoRepositorycs
+    public interface IRegistroAccesoRepository
     {
     }
 }
