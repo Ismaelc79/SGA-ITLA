@@ -8,7 +8,7 @@ namespace SGA.Domain.Entities.Trip
         public int ViajeId { get; set; }
         public int ReporteId { get; set; }
         public TipoIncidencia TipoIncidencia { get; set; }
-        public string Estado { get; set; }
+        public EstadoIncidencia EstadoIncidencia { get; set; }
         public string Descripcion { get; set; }
         public DateTime FechaReporte { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Enums;
 
 namespace SGA.Domain.Entities.Users
 {
@@ -9,5 +10,6 @@ namespace SGA.Domain.Entities.Users
         public string Identificacion { get; set; }
         public string Cargo { get; set; }
         public string Departamento { get; set; }
+
     }
 }

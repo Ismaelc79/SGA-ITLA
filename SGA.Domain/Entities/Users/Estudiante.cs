@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Enums;
 
 namespace SGA.Domain.Entities.Users
 {
@@ -9,7 +10,6 @@ namespace SGA.Domain.Entities.Users
         public string Matricula { get; set; }
         public string Carrera { get; set; }
         public string PeriodoAcademico { get; set; }
-        public string Estado { get; set; }
 
     }
 }
