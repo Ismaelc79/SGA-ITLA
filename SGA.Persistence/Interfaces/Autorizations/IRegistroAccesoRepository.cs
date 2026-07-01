@@ -1,0 +1,9 @@
+﻿using SGA.Domain.Entities.Authorization;
+using SGA.Persistence.Base;
+
+namespace SGA.Persistence.Interfaces.Autorizations
+{
+    public interface IRegistroAccesoRepository : IBaseRepository<RegistroAcceso>
+    {
+    }
+}

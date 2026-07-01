@@ -1,6 +1,9 @@
-﻿namespace SGA.Persistence.Interfaces
+﻿using SGA.Domain.Entities.Configuration;
+using SGA.Persistence.Base;
+
+namespace SGA.Persistence.Interfaces
 {
-    public interface  IHorarioRepository
+    public interface  IHorarioRepository : IBaseRepository<Horario>
     {
     }
 }
