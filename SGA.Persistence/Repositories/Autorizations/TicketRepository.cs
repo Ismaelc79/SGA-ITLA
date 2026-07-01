@@ -1,6 +1,14 @@
-﻿namespace SGA.Persistence.Repositories.Autorizations
+﻿using SGA.Domain.Entities.Authorization;
+using SGA.Persistence.Context;
+using SGA.Persistence.Interfaces.Autorizations;
+using SGA.Persistence.Repositories.Common;
+
+namespace SGA.Persistence.Repositories.Autorizations
 {
-    public sealed class TicketRepository
+    public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
     {
+        public TicketRepository(SGADB context) : base(context)
+        {
+        }
     }
 }

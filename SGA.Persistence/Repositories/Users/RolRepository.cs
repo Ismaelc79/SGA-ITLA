@@ -1,6 +1,14 @@
-﻿namespace SGA.Persistence.Repositories.Users
+﻿using SGA.Domain.Entities.Users;
+using SGA.Persistence.Context;
+using SGA.Persistence.Interfaces.Users;
+using SGA.Persistence.Repositories.Common;
+
+namespace SGA.Persistence.Repositories.Users
 {
-    public sealed class RolRepository
+    public class RolRepository : BaseRepository<Rol>, IRolRepository
     {
+        public RolRepository(SGADB context) : base(context)
+        {
+        }
     }
 }

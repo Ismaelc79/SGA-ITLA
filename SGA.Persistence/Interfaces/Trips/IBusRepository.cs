@@ -1,6 +1,9 @@
-﻿namespace SGA.Persistence.Interfaces.Trips
+﻿using SGA.Domain.Entities.Configuration;
+using SGA.Persistence.Base;
+
+namespace SGA.Persistence.Interfaces.Trips
 {
-    public interface  IBusRepository
+    public interface  IBusRepository : IBaseRepository<Bus>
     {
     }
 }
