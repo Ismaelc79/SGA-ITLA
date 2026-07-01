@@ -3,6 +3,6 @@
     public class SaveNotificationDto
     {
         public string Message { get; set; }
-        public int UserId { get; set; } // Para saber a quién va la notificación
+        public int UserId { get; set; }
     }
 }

@@ -22,4 +22,5 @@
   <Folder Name="/SGA.Web/">
     <Project Path="SGA.Web/SGA.Web.csproj" />
   </Folder>
+  <Project Path="SGA.Desktop/SGA.Desktop.csproj" Id="8bb2f49e-65ba-4ca6-8061-5a7d71f8f04e" />
 </Solution>
