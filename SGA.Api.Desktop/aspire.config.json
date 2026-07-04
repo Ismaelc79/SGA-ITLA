@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "SGA.Api.Desktop.AppHost/SGA.Api.Desktop.AppHost.csproj"
+  }
+}
