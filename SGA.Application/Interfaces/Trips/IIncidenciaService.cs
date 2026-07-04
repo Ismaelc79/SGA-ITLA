@@ -1,7 +1,9 @@
 ﻿
+using SGA.Application.Base;
+
 namespace SGA.Application.Interfaces.Trips
 {
-    public interface  IIncidenciaService
+    public interface  IIncidenciaService<T> : IBaseService<T>
     {
     }
 }

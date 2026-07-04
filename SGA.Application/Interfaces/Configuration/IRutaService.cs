@@ -1,7 +1,9 @@
 ﻿
+using SGA.Application.Base;
+
 namespace SGA.Application.Interfaces.Configuration
 {
-    public interface IRutaService
+    public interface IRutaService<T> : IBaseService<T>
     {
     }
 }

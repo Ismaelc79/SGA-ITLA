@@ -1,7 +1,9 @@
 ﻿
+using SGA.Application.Base;
+
 namespace SGA.Application.Interfaces.Authorization
 {
-    public interface IAutorizacionService
+    public interface IAutorizacionService<T> : IBaseService<T>
     {
     }
 }

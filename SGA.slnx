@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/IOC/">
+    <Project Path="SGA.IOC/SGA.IOC.csproj" Id="9bb62311-2c3d-4bff-8069-44e25c45aac4" />
+  </Folder>
   <Folder Name="/SGA.Api/">
     <Project Path="SGA.Api/SGA.Api.csproj" />
   </Folder>
@@ -18,8 +21,5 @@
   <Folder Name="/SGA.Test/">
     <Project Path="SGA.Application.Test/SGA.Application.Test.csproj" />
     <Project Path="SGA.Persistence.Test/SGA.Persistence.Test.csproj" />
-  </Folder>
-  <Folder Name="/SGA.Web/">
-    <Project Path="SGA.Web/SGA.Web.csproj" />
   </Folder>
 </Solution>
