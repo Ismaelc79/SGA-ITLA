@@ -8,11 +8,10 @@ Accept: application/json
 builder.Services.AddTransient<INotificationService, NotificationService>();
 builder.Services.AddTransient<IUserService, UserService>();
 
-// 1. Antes de var app = builder.Build();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 2. Después de var app = builder.Build(); y antes de app.Run();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

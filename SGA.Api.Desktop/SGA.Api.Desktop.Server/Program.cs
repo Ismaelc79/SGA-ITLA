@@ -3,9 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
-// --- ESTO ES LO QUE NECESITAMOS AGREGAR ---
 builder.Services.AddControllers();
-// ------------------------------------------
+
 
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
@@ -20,9 +19,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// --- ESTO ES LO QUE NECESITAMOS AGREGAR ---
 app.MapControllers();
-// ------------------------------------------
+
 
 app.MapDefaultEndpoints();
 app.UseFileServer();
