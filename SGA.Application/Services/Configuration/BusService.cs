@@ -52,6 +52,37 @@ namespace SGA.Application.Services.Configuration
             };
         }
 
+        public async Task<OperationResult<IEnumerable<BusDto>>> GetByActivosAsync()
+        {
+            var buses = await _busRepository.GetByActivosAsync();
+            return new OperationResult<IEnumerable<BusDto>>
+            {
+                Success = true,
+                Message = "Buses activos obtenidos exitosamente.",
+                Data = buses.Select(MapToDto)
+            };
+        }
+       
+        public async Task<OperationResult<BusDto>> GetByPlacaAsync(string placa)
+        {
+            var bus = await _busRepository.GetByPlacaAsync(placa);
+            if (bus == null)
+            {
+                return new OperationResult<BusDto>
+                {
+                    Success = false,
+                    Message = $"No se encontró un bus con la placa '{placa}'.",
+                    Errors = new List<string> { "Bus no encontrado." }
+                };
+            }
+            return new OperationResult<BusDto>
+            {
+                Success = true,
+                Message = "Bus encontrado exitosamente.",
+                Data = MapToDto(bus)
+            };
+        }
+
         public async Task<OperationResult<BusDto>> CreateAsync(CreateBusDto dto)
         {
             await ValidarPlacaUnicaAsync(dto.Placa);
@@ -140,18 +171,7 @@ namespace SGA.Application.Services.Configuration
             };
         }
 
-        public async Task<OperationResult<IEnumerable<BusDto>>> GetActiveAsync()
-        {
-            var buses = await _busRepository.GetByActivosAsync();
-            return new OperationResult<IEnumerable<BusDto>>
-            {
-                Success = true,
-                Message = "Buses activos obtenidos exitosamente.",
-                Data = buses.Select(MapToDto)
-            };
-        }
-
-        public async Task<OperationResult<BusDto>> ChangeStatusAsync(int id, BusStatusChangeDto dto)
+          public async Task<OperationResult<BusDto>> ChangeStatusAsync(int id, BusStatusChangeDto dto)
         {
             var bus = await _busRepository.GetByIdAsync(id);
 
@@ -202,7 +222,7 @@ namespace SGA.Application.Services.Configuration
         {
             return new BusDto
             {
-                Id = bus.Id.ToString(),
+                Id = bus.Id,
                 Placa = bus.Placa,
                 Capacidad = bus.Capacidad,
                 EstadoBus = bus.EstadoBus

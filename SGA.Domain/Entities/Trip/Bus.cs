@@ -5,7 +5,7 @@ namespace SGA.Domain.Entities.Trip
 {
     public class Bus : AuditEntity
     {
-        public string ConductorId { get; set; }
+        public int ConductorId { get; set; }
         public string Placa { get; set; }
         public int Capacidad { get; set; }
         public EstadoBus EstadoBus { get; set; }

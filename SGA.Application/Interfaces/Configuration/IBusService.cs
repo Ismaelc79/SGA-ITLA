@@ -8,7 +8,9 @@ namespace SGA.Application.Interfaces.Configuration
     public interface IBusService : 
         IBaseService<BusDto, CreateBusDto, UpdateBusDto>
     {
-      Task<OperationResult<IEnumerable<BusDto>>> GetActiveAsync();
+      Task<OperationResult<IEnumerable<BusDto>>> GetByActivosAsync();
       Task<OperationResult<BusDto>> ChangeStatusAsync(int id, BusStatusChangeDto dto);
+      Task<OperationResult<BusDto>> GetByPlacaAsync(string placa);
+
     }
 }

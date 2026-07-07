@@ -5,7 +5,7 @@ using SGA.Application.Interfaces.Configuration;
 namespace SGA.Api.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[Controller]")]
     public class BusController : ControllerBase
     {
         private readonly IBusService _busService;
@@ -22,10 +22,21 @@ namespace SGA.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _busService.GetByIdAsync(id);
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("placa/{placa}")]
+        public async Task<IActionResult> GetByPlaca(string placa)
+        {
+            var result = await _busService.GetByPlacaAsync(placa);
             if (!result.Success)
             {
                 return NotFound(result);
@@ -56,7 +67,7 @@ namespace SGA.Api.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _busService.DeleteAsync(id);
