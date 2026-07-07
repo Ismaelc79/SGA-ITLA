@@ -11,7 +11,6 @@
   <Folder Name="/SGA.Domain/">
     <Project Path="SGA.Domain/SGA.Domain.csproj" />
   </Folder>
-  <Folder Name="/SGA.Infraestructure/" />
   <Folder Name="/SGA.Model/">
     <Project Path="SGA.Model/SGA.Model.csproj" />
   </Folder>

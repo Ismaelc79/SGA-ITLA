@@ -20,11 +20,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SGA.Application\SGA.Application.csproj" />
     <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
+    <ProjectReference Include="..\SGA.IOC\SGA.IOC.csproj" />
     <ProjectReference Include="..\SGA.Model\SGA.Model.csproj" />
     <ProjectReference Include="..\SGA.Persistence\SGA.Persistence.csproj" />
   </ItemGroup>

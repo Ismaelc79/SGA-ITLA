@@ -1,11 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Services.Configuration;
 namespace SGA.IOC
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplication(
+            this IServiceCollection services)
+           
         {
-           return services;
+            services.AddScoped<IBusService, BusService>();
+            return services;
         }
     }
 }
