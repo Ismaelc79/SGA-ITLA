@@ -33,17 +33,6 @@ namespace SGA.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("placa/{placa}")]
-        public async Task<IActionResult> GetByPlaca(string placa)
-        {
-            var result = await _busService.GetByPlacaAsync(placa);
-            if (!result.Success)
-            {
-                return NotFound(result);
-            }
-            return Ok(result);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBusDto dto)
         {
