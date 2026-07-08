@@ -1,0 +1,50 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using SGA.Application.DTOs.Ruta;
+using SGA.Application.Interfaces.Configuration;
+using SGA.Persistence.Interfaces.Trips;
+
+namespace SGA.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RutaController : ControllerBase
+    {
+        private readonly IRutaService _rutaService;
+
+        public RutaController(IRutaService rutaService)
+        {
+            _rutaService = rutaService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _rutaService.GetAllAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _rutaService.GetByIdAsync(id);
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CreateRutaDto dto)
+        {
+            var result = await _rutaService.CreateAsync(dto);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return CreatedAtAction(nameof(GetById), new {id = result.Data.Id}, result);
+        }
+    }
+}

@@ -1,15 +1,16 @@
-﻿using SGA.Domain.Base;
+﻿
+
 using SGA.Domain.Enums;
 
-namespace SGA.Domain.Entities.Configuration
+namespace SGA.Application.DTOs.Ruta
 {
-    public class Ruta : AuditEntity
+    public class RutaDto
     {
-        public int ParadaId { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
-        public string Descripcion { get; set; }
         public EstadoRuta EstadoRuta { get; set; }
         public string RutaOrigen { get; set; }
         public string RutaDestino { get; set; }
+
     }
 }

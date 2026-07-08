@@ -2,7 +2,6 @@
 using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
-using SGA.Domain.Entities.Trip;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces.Trips;
 
@@ -135,6 +134,7 @@ namespace SGA.Application.Services.Configuration
             busExistente.Placa = dto.Placa;
             busExistente.Capacidad = dto.Capacidad;
             busExistente.ConductorId = dto.ConductorId;
+            busExistente.EstadoBus = dto.EstadoBus;
 
             await _busRepository.UpdateAsync(busExistente);
             return new OperationResult<BusDto>

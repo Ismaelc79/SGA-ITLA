@@ -8,6 +8,7 @@ namespace SGA.Application.DTOs.Bus
         public int Id { get; set; }
         public int ConductorId { get; set; }
         public int Capacidad { get; set; }
+        public EstadoBus EstadoBus { get; set; }
         public string Placa { get; set; }
     }
 }

@@ -93,7 +93,11 @@ namespace SGA.Persistence.Context
                 entity.Property(x => x.Placa)
                 .HasMaxLength(50)
                 .IsRequired();
-            });
+            }); 
+
+            modelBuilder.Entity<Ruta>()
+                .Property(x=> x.EstadoRuta)
+                .HasConversion<string>();
 
             modelBuilder.Entity<Incidencia>(entity =>
             {
