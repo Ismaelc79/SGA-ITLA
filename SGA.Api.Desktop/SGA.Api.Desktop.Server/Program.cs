@@ -1,16 +1,20 @@
+using SGA.Application.Interfaces;
+using SGA.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Swashbuckle.AspNetCore.Swagger;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddControllers();
-
-
 builder.Services.AddProblemDetails();
 
-builder.Services.AddOpenApi();
-
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -19,15 +23,15 @@ app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
-
-
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "SGA.Api v1");
+         
+    });
 }
 
 app.MapControllers();
-
-
 app.MapDefaultEndpoints();
-app.UseFileServer();
 
 app.Run();
