@@ -1,10 +1,9 @@
-﻿using SGA.Domain.Base;
-
-namespace SGA.Domain.Entities.Configuration
+﻿
+namespace SGA.Application.DTOs.Parada
 {
-    public class Parada : AuditEntity
+    public class UpdateParadaDto
     {
-        public int RutaId { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Ubicacion { get; set; }
         public string OrdenParada { get; set; }

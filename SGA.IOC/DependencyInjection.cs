@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Interfaces.Trip;
 using SGA.Application.Services.Configuration;
+using SGA.Application.Services.Trips;
 using SGA.Persistence.Interfaces.Trips;
 namespace SGA.IOC
 {

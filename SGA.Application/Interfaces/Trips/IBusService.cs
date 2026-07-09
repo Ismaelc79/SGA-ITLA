@@ -1,9 +1,8 @@
-﻿
-using SGA.Application.Base;
+﻿using SGA.Application.Base;
 using SGA.Application.DTOs.Bus;
 using SGA.Domain.Base;
 
-namespace SGA.Application.Interfaces.Configuration
+namespace SGA.Application.Interfaces.Trip
 {
     public interface IBusService : 
         IBaseService<BusDto, CreateBusDto, UpdateBusDto>

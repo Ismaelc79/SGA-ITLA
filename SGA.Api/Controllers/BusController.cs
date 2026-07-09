@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SGA.Application.DTOs.Bus;
-using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Interfaces.Trip;
 
 namespace SGA.Api.Controllers
 {

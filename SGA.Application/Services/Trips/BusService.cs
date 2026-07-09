@@ -1,11 +1,11 @@
 ﻿using SGA.Application.DTOs.Bus;
 using SGA.Application.Exceptions;
-using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Interfaces.Trip;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces.Trips;
 
-namespace SGA.Application.Services.Configuration
+namespace SGA.Application.Services.Trips
 {
     public class BusService : IBusService
     {
