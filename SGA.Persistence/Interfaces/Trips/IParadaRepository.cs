@@ -5,5 +5,6 @@ namespace SGA.Persistence.Interfaces.Trips
 {
     public interface  IParadaRepository : IBaseRepository<Parada>
     {
+        Task<Parada> GetByNombreAsync(string nombre);
     }
 }
