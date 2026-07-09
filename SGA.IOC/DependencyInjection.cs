@@ -13,9 +13,12 @@ namespace SGA.IOC
             this IServiceCollection services)
            
         {
+
             services.AddScoped<IBusService, BusService>();
             services.AddScoped<IRutaService, RutaService>();
+            services.AddScoped<IParadaService, ParadaService>();
             return services;
+
         }
     }
 }
