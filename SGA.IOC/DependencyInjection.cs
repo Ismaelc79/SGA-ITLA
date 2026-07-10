@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
+using SGA.Application.Interfaces.Trips;
 using SGA.Application.Services.Configuration;
 using SGA.Application.Services.Trips;
 using SGA.Persistence.Interfaces.Trips;
@@ -17,6 +17,7 @@ namespace SGA.IOC
             services.AddScoped<IBusService, BusService>();
             services.AddScoped<IRutaService, RutaService>();
             services.AddScoped<IParadaService, ParadaService>();
+            services.AddScoped<IHorarioService, HorarioService>();
             return services;
 
         }

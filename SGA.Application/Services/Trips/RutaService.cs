@@ -1,12 +1,12 @@
 ﻿
 using SGA.Application.DTOs.Ruta;
-using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
 using SGA.Application.Exceptions;
 using SGA.Persistence.Interfaces.Trips;
 using SGA.Domain.Enums;
+using SGA.Application.Interfaces.Trips;
 
-namespace SGA.Application.Services.Configuration
+namespace SGA.Application.Services.Trips
 {
     public class RutaService : IRutaService
     {

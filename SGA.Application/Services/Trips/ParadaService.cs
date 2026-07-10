@@ -1,6 +1,6 @@
 ﻿using SGA.Application.DTOs.Parada;
 using SGA.Application.Exceptions;
-using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Base;
 using SGA.Persistence.Interfaces.Trips;
 

@@ -1,14 +1,16 @@
-﻿using SGA.Domain.Base;
+﻿
 using SGA.Domain.Enums;
 
-namespace SGA.Domain.Entities.Trip
+namespace SGA.Application.DTOs.Viaje
 {
-    public class Viaje : AuditEntity
+    public class ViajeDto
     {
+        public int Id { get; set; }
         public int RutaId { get; set; }
         public int AutobusId { get; set; }
         public int ConductorId { get; set; }
         public int HorarioId { get; set; }
+        public int IncidenciaId { get; set; }
         public EstadoViaje EstadoViaje { get; set; }
         public DateTime? HoraSalidaEstimada { get; set; }
         public DateTime? HoraLlegadaEstimada { get; set; }

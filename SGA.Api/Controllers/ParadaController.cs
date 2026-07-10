@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SGA.Application.DTOs.Parada;
-using SGA.Application.Interfaces.Configuration;
+using SGA.Application.Interfaces.Trips;
 using SGA.Persistence.Interfaces.Trips;
 
 namespace SGA.Api.Controllers
