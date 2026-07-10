@@ -18,6 +18,7 @@ namespace SGA.IOC
             services.AddScoped<IRutaService, RutaService>();
             services.AddScoped<IParadaService, ParadaService>();
             services.AddScoped<IHorarioService, HorarioService>();
+            services.AddScoped<IViajeService, ViajeService>();
             return services;
 
         }

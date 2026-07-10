@@ -54,6 +54,7 @@ namespace SGA.Application.Services.Trips
         public async Task<OperationResult<IEnumerable<BusDto>>> GetByActivosAsync()
         {
             var buses = await _busRepository.GetByActivosAsync();
+
             return new OperationResult<IEnumerable<BusDto>>
             {
                 Success = true,

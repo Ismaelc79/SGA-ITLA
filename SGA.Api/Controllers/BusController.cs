@@ -33,6 +33,17 @@ namespace SGA.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Activos")]
+        public async Task<IActionResult> GetByActivos()
+        {
+            var result = await _busService.GetByActivosAsync();
+            if (!result.Success) 
+            {
+                return NotFound(result);
+            }
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBusDto dto)
         {

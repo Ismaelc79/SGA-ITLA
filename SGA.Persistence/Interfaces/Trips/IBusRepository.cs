@@ -8,5 +8,6 @@ namespace SGA.Persistence.Interfaces.Trips
     {
         Task<Bus> GetByPlacaAsync(string placa);
         Task<IEnumerable<Bus>> GetByActivosAsync();
+
     }
 }
