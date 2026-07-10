@@ -19,4 +19,36 @@ public class UsuariosController : ControllerBase
         var users = await _userService.GetAllAsync();
         return Ok(users);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var user = await _userService.GetByIdAsync(id);
+
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add(SaveUserDto userDto)
+    {
+        await _userService.AddAsync(userDto);
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateUserDto userDto)
+    {
+        await _userService.UpdateAsync(userDto);
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _userService.DeleteAsync(id);
+        return Ok();
+    }
 }

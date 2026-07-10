@@ -19,7 +19,7 @@ namespace SGA.Persistence.Repositories.Common
 
         public virtual async Task<List<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+         return await _dbSet.ToListAsync();
         }
         public virtual async Task<T?> GetByIdAsync(int id)
         {

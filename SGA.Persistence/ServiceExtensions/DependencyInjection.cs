@@ -9,6 +9,8 @@ using SGA.Persistence.Interfaces.Users;
 using SGA.Persistence.Repositories.Autorizations;
 using SGA.Persistence.Repositories.Trips;
 using SGA.Persistence.Repositories.Users;
+using SGA.Persistence.Interfaces.Notifications;
+using SGA.Persistence.Repositories.Notifications;
 
 namespace SGA.Persistence.ServiceExtensions
 {

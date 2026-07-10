@@ -21,7 +21,7 @@ namespace SGA.Persistence.Context
         public DbSet<TarjetaRecargable> TarjetasRecargables { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
-        public DbSet<Bus> Buses { get; set; }
+        public DbSet<Domain.Entities.Trip.Bus> Buses { get; set; }
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Parada> Paradas { get; set; }
         public DbSet<Ruta> Rutas { get; set; }
@@ -85,7 +85,7 @@ namespace SGA.Persistence.Context
                 .Property(x => x.EstadoTicket)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<Bus>(entity =>
+            modelBuilder.Entity<Domain.Entities.Trip.Bus>(entity =>
             {
                 entity.Property(x => x.EstadoBus)
                 .HasConversion<string>();
