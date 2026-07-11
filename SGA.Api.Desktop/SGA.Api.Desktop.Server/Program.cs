@@ -9,11 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
+
 builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<INotificationService, NotificationService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
