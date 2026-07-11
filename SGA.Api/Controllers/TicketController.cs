@@ -1,32 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SGA.Application.DTOs.Horario;
-using SGA.Application.Interfaces.Trips;
+using SGA.Application.DTOs.Ticket;
+using SGA.Application.Interfaces.Configuration;
 
 namespace SGA.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HorarioController : ControllerBase
+    public class TicketController : ControllerBase
     {
-        private readonly IHorarioService _horarioService;
+        private readonly ITicketService _ticketService;
 
-        public HorarioController(IHorarioService horarioService)
+        public TicketController(ITicketService ticketService)
         {
-            _horarioService = horarioService;
+            _ticketService = ticketService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _horarioService.GetAllAsync();
+            var result = await _ticketService.GetAllAsync();
             return Ok(result);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _horarioService.GetByIdAsync(id);
+            var result = await _ticketService.GetByIdAsync(id);
 
             if (!result.Success)
             {
@@ -36,21 +36,21 @@ namespace SGA.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateHorarioDto dto)
+        public async Task<IActionResult> Post([FromBody] CreateTicketDto dto)
         {
-            var result = await _horarioService.CreateAsync(dto);
+            var result = await _ticketService.CreateAsync(dto);
             if (!result.Success)
             {
                 return BadRequest(result);
             }
-            return CreatedAtAction(nameof(GetById), new { id = result.Data.Id}, result);
+             return CreatedAtAction(nameof(GetById), new {id = result.Data.Id}, result);
         }
 
         [HttpPut("{id}")]
-
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateHorarioDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateTicketDto dto)
         {
-            var result = await _horarioService.UpdateAsync(id, dto);
+            var result = await _ticketService.UpdateAsync(id, dto);
+
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -61,7 +61,7 @@ namespace SGA.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _horarioService.DeleteAsync(id);
+            var result = await _ticketService.DeleteAsync(id);
             if (!result.Success)
             {
                 return BadRequest(result);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
 using SGA.Application.Interfaces.Trips;
 using SGA.Application.Services.Configuration;
@@ -19,6 +20,9 @@ namespace SGA.IOC
             services.AddScoped<IParadaService, ParadaService>();
             services.AddScoped<IHorarioService, HorarioService>();
             services.AddScoped<IViajeService, ViajeService>();
+            services.AddScoped<IPagoService, PagoService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITarjetaRecargableService, TarjetaRecargableService>();
             return services;
 
         }
