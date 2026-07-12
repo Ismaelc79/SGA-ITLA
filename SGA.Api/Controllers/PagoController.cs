@@ -41,6 +41,7 @@ namespace SGA.Api.Controllers
         public async Task<IActionResult> Post([FromBody] CreatePagoDto dto)
         {
             var result = await _pagoService.CreateAsync(dto);
+
             if (!result.Success) 
             { 
                 return BadRequest(result);

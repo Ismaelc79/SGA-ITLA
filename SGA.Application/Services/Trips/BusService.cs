@@ -1,4 +1,5 @@
-﻿using SGA.Application.DTOs.Bus;
+﻿using FluentValidation; 
+using SGA.Application.DTOs.Bus;
 using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Trip;
 using SGA.Domain.Base;
@@ -10,10 +11,20 @@ namespace SGA.Application.Services.Trips
     public class BusService : IBusService
     {
         private readonly IBusRepository _busRepository;
+        private readonly IValidator<CreateBusDto> _createValidator;
+        private readonly IValidator<UpdateBusDto> _updateValidator;
+        private readonly IValidator<BusStatusChangeDto>  _statusChangeValidator; 
 
-        public BusService(IBusRepository busRepository)
+        public BusService(
+            IBusRepository busRepository, 
+            IValidator<CreateBusDto> createValidator, 
+            IValidator<UpdateBusDto> updateValidator, 
+            IValidator<BusStatusChangeDto> statusChangeValidator)
         {
             _busRepository = busRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+            _statusChangeValidator = statusChangeValidator;
         }
 
         public async Task<OperationResult<IEnumerable<BusDto>>> GetAllAsync()
@@ -85,22 +96,27 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<BusDto>> CreateAsync(CreateBusDto dto)
         {
-            await ValidarPlacaUnicaAsync(dto.Placa);
+            //Validar formato de los datos
+            var validacion = _createValidator.Validate(dto);
 
-            if (dto.Capacidad <= 0)
+            if (!validacion.IsValid)
             {
                 return new OperationResult<BusDto>
                 {
                     Success = false,
-                    Message = "La capacidad del bus debe ser mayor a cero.",
-                    Errors = new List<string> { "Capacidad inválida." }
+                    Message = "Los datos del autobús no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
+
+            await ValidarPlacaUnicaAsync(dto.Placa);
 
             var bus = new Domain.Entities.Trip.Bus
             {
                 ConductorId = dto.ConductorId,
                 Placa = dto.Placa,
+                Marca = dto.Marca,
+                Modelo = dto.Modelo,
                 Capacidad = dto.Capacidad,
                 EstadoBus = EstadoBus.Disponible //Todo bus comienza con estado disponible
             };
@@ -118,6 +134,18 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<BusDto>> UpdateAsync(int id, UpdateBusDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+
+            if (!validacion.IsValid) 
+            {
+                return new OperationResult<BusDto>
+                {
+                    Success = false,
+                    Message = "Los datos del autobús no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
             var busExistente = await _busRepository.GetByIdAsync(id);
 
             if (busExistente == null){ 
@@ -130,14 +158,17 @@ namespace SGA.Application.Services.Trips
                 };
             }
 
-            await ValidarPlacaUnicaAsync(dto.Placa,id);
+            await ValidarPlacaUnicaAsync(dto.Placa);
 
             busExistente.Placa = dto.Placa;
             busExistente.Capacidad = dto.Capacidad;
+            busExistente.Marca = dto.Marca;
+            busExistente.Modelo = dto.Modelo;
             busExistente.ConductorId = dto.ConductorId;
             busExistente.EstadoBus = dto.EstadoBus;
 
             await _busRepository.UpdateAsync(busExistente);
+
             return new OperationResult<BusDto>
             {
                 Success = true,
@@ -174,6 +205,18 @@ namespace SGA.Application.Services.Trips
 
           public async Task<OperationResult<BusDto>> ChangeStatusAsync(int id, BusStatusChangeDto dto)
         {
+            var validacion = _statusChangeValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<BusDto>
+                {
+                    Success = false,
+                    Message = "Los datos del cambio de estado no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
             var bus = await _busRepository.GetByIdAsync(id);
 
             if (bus == null)
@@ -201,16 +244,17 @@ namespace SGA.Application.Services.Trips
             };
         }
 
-        private async Task ValidarPlacaUnicaAsync(string placa, int? idExcluir = null)
-        {
-            var busExistente = await _busRepository.GetByPlacaAsync(placa.Trim());
 
-            if (busExistente != null && busExistente.Id != idExcluir)
+        private async Task ValidarPlacaUnicaAsync(string placa)
+        {
+            var busExistente = await _busRepository.GetByPlacaAsync(placa);
+
+            if (busExistente != null)
             {
                 throw new BusinessRuleException($"Ya existe un bus con la placa '{placa}'.");
             }
         }
-
+        
         private void ValidarCambioEstado(EstadoBus actual, EstadoBus nuevo)
         {
             if(actual == nuevo)
@@ -225,6 +269,8 @@ namespace SGA.Application.Services.Trips
             {
                 Id = bus.Id,
                 Placa = bus.Placa,
+                Marca = bus.Marca,
+                Modelo = bus.Modelo,
                 Capacidad = bus.Capacidad,
                 EstadoBus = bus.EstadoBus
             };

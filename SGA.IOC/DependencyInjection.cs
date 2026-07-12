@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using SGA.Application.DTOs.Bus;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
 using SGA.Application.Interfaces.Trips;
 using SGA.Application.Services.Configuration;
 using SGA.Application.Services.Trips;
-using SGA.Persistence.Interfaces.Trips;
+using SGA.Application.Validators.Trips;
+
+
 namespace SGA.IOC
 {
     public static class DependencyInjection
@@ -14,7 +17,7 @@ namespace SGA.IOC
             this IServiceCollection services)
            
         {
-
+            //Servicios e interfaces de servicios
             services.AddScoped<IBusService, BusService>();
             services.AddScoped<IRutaService, RutaService>();
             services.AddScoped<IParadaService, ParadaService>();
@@ -23,6 +26,11 @@ namespace SGA.IOC
             services.AddScoped<IPagoService, PagoService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITarjetaRecargableService, TarjetaRecargableService>();
+          
+            //Validators
+            services.AddScoped<IValidator<CreateBusDto>, CreateBusDtoValidator>();
+            services.AddScoped<IValidator<UpdateBusDto>, UpdateBusDtoValidator>();
+            services.AddScoped<IValidator<BusStatusChangeDto>, BusStatusChangeDtoValidator>();
             return services;
 
         }
