@@ -5,5 +5,7 @@ namespace SGA.Persistence.Interfaces.Trips
 {
     public interface IRutaRepository : IBaseRepository<Ruta>
     {
+         Task<IEnumerable<Ruta>> GetByDisponibleAsync();
+         Task<Ruta> GetByNombreAsync(string nombre);
     }
 }

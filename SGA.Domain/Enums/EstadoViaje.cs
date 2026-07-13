@@ -5,7 +5,8 @@ namespace SGA.Domain.Enums
     {
         Programado = 1,
         EnCurso = 2,
-        Finalizado = 3,
-        Cancelado = 4
+        Completado = 3,
+        Cancelado = 4,
+        Retrasado = 5
     }
 }

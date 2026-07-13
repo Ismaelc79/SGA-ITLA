@@ -84,6 +84,9 @@ namespace SGA.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EstudianteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaHora")
                         .HasColumnType("datetime2");
 
@@ -100,9 +103,6 @@ namespace SGA.Persistence.Migrations
                     b.Property<double>("MontoPago")
                         .HasPrecision(18, 2)
                         .HasColumnType("float(18)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -192,6 +192,9 @@ namespace SGA.Persistence.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("float(18)");
 
+                    b.Property<int>("PagoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("TarjetasRecargables");
@@ -215,6 +218,9 @@ namespace SGA.Persistence.Migrations
                     b.Property<string>("EstadoTicket")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EstudianteId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaCierre")
                         .HasColumnType("datetime2");
@@ -241,53 +247,9 @@ namespace SGA.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("SGA.Domain.Entities.Configuration.Bus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Capacidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ConductorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EstadoBus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Placa")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Buses");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Configuration.Horario", b =>
@@ -358,7 +320,7 @@ namespace SGA.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ParadaOrden")
+                    b.Property<string>("OrdenParada")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -393,7 +355,7 @@ namespace SGA.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Estado")
+                    b.Property<string>("EstadoRuta")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -421,6 +383,55 @@ namespace SGA.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rutas");
+                });
+
+            modelBuilder.Entity("SGA.Domain.Entities.Trip.Bus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ConductorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EstadoBus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Marca")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Placa")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Buses");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Trip.Incidencia", b =>
@@ -462,9 +473,6 @@ namespace SGA.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ViajeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Incidencia");
@@ -502,6 +510,9 @@ namespace SGA.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("HorarioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IncidenciaId")
                         .HasColumnType("int");
 
                     b.Property<string>("ModifiedBy")

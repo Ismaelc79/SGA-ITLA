@@ -5,7 +5,7 @@ namespace SGA.Domain.Entities.Authorization
 {
     public class Ticket : AuditEntity
     {
-        public int UsuarioId { get; set; }
+        public int EstudianteId { get; set; }
         public int RutaId { get; set; }
         public int ParadaId { get; set; }
         public int PagoId { get; set; }
