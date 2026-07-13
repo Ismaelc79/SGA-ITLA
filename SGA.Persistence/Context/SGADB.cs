@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SGA.Domain.Base;
 using SGA.Domain.Entities.Authorization;
 using SGA.Domain.Entities.Configuration;
-using SGA.Domain.Entities.Users;
 using SGA.Domain.Entities.Trip;
-using SGA.Domain.Base;
+using SGA.Domain.Entities.Users;
+using SGA.Domain.Notifications;
 
 namespace SGA.Persistence.Context
 {
@@ -31,6 +32,7 @@ namespace SGA.Persistence.Context
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Notificacion> Notificaciones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,7 +55,7 @@ namespace SGA.Persistence.Context
             modelBuilder.Entity<Autorizacion>().ToTable("Estudiante");
             modelBuilder.Entity<Autorizacion>().ToTable("Rol");
             modelBuilder.Entity<Autorizacion>().ToTable("Usuario");
-            modelBuilder.Entity<Autorizacion>().ToTable("Notificaciones");
+            modelBuilder.Entity<Notificacion>().ToTable("Notificaciones");
 
             modelBuilder.Entity<Autorizacion>()
                 .Property(x => x.Estado)

@@ -52,7 +52,7 @@ namespace SGA.Application.Services
                 Nombre = userDto.UserName,
                 Email = userDto.Email,
                 PasswordHash = userDto.Password,
-                RolId = 1,
+                RolId = 4,
                 Estado = EstadoUsuario.Activo,
                 EstaRestringido = false
             };

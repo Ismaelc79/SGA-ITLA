@@ -1,7 +1,4 @@
 <Solution>
-  <Folder Name="/SGA.Api/">
-    <Project Path="SGA.Api/SGA.Api.csproj" />
-  </Folder>
   <Folder Name="/SGA.Application/">
     <Project Path="SGA.Application/SGA.Application.csproj" />
   </Folder>
@@ -19,10 +16,5 @@
     <Project Path="SGA.Application.Test/SGA.Application.Test.csproj" />
     <Project Path="SGA.Persistence.Test/SGA.Persistence.Test.csproj" />
   </Folder>
-  <Folder Name="/SGA.Web/">
-    <Project Path="SGA.Web/SGA.Web.csproj" />
-  </Folder>
-  <Project Path="SGA.Api.Desktop/SGA.Api.Desktop.AppHost/SGA.Api.Desktop.AppHost.csproj" Id="15738e02-fba2-446d-b89e-161c5d1ee467" />
-  <Project Path="SGA.Api.Desktop/SGA.Api.Desktop.Server/SGA.Api.Desktop.Server.csproj" />
   <Project Path="SGA.Desktop/SGA.Desktop.csproj" Id="8bb2f49e-65ba-4ca6-8061-5a7d71f8f04e" />
 </Solution>

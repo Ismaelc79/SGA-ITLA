@@ -3,7 +3,7 @@ using SGA.Domain.Entities;
 using SGA.Domain.Entities.Authorization;
 using SGA.Domain.Entities.Configuration;
 using SGA.Domain.Entities.Users;
-
+using SGA.Domain.Entities.Trip;
 namespace SGA.Persistence.Context
 {
     public class ApplicationDbContext : DbContext
