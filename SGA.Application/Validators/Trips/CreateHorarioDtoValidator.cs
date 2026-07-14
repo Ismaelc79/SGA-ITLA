@@ -39,7 +39,7 @@ namespace SGA.Application.Validators.Trips
 
             RuleFor(x => x.HoraFin)
                 .GreaterThan(x => x.HoraInicio)
-                    .WithMessage("La hora de finalización debe ser mayor que la hora de inicio");
+                    .WithMessage("La hora de finalización debe ser posterior a la hora de inicio");
 
         }
     }

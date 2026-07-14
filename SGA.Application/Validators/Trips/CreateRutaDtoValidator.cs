@@ -21,6 +21,8 @@ namespace SGA.Application.Validators.Trips
                     .WithMessage(ValidationMessages.LongitudMaxima("El nombre de la ruta",ValidationConstants.LongitudTextoLarga));
 
             RuleFor(x => x.EstadoRuta)
+                .NotEqual(Domain.Enums.EstadoRuta.Ninguno)
+                    .WithMessage(ValidationMessages.EnumRequerido("estado de la ruta"))
                 .IsInEnum()
                     .WithMessage(ValidationMessages.EnumInvalido("El estado de la ruta"));
 

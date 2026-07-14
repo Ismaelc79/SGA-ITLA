@@ -4,6 +4,7 @@ using SGA.Application.DTOs.Bus;
 using SGA.Application.DTOs.Horario;
 using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
+using SGA.Application.DTOs.Viaje;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
 using SGA.Application.Interfaces.Trips;
@@ -40,6 +41,9 @@ namespace SGA.IOC
             services.AddScoped<IValidator<UpdateParadaDto>, UpdateParadaDtoValidator>();
             services.AddScoped<IValidator<CreateHorarioDto> , CreateHorarioDtoValidator>();
             services.AddScoped<IValidator<UpdateHorarioDto>, UpdateHorarioDtoValidator>();
+            services.AddScoped<IValidator<CreateViajeDto>, CreateViajeDtoValidator>();
+            services.AddScoped<IValidator<UpdateViajeDto>, UpdateViajeDtoValidator>();
+            services.AddScoped<IValidator<ViajeStatusChangeDto>, ViajeStatusChangeDtoValidator>();
             return services;
 
         }

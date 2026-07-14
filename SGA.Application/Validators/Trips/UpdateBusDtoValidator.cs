@@ -27,6 +27,8 @@ namespace SGA.Application.Validators.Trips
                     .WithMessage($"La capacidad del autobús no puede exceder {CapacidadMaximaPermitida} pasajeros.");
 
             RuleFor(x => x.EstadoBus)
+                .NotEqual(Domain.Enums.EstadoBus.Ninguno)
+                    .WithMessage(ValidationMessages.EnumRequerido("estado del autobús"))
                 .IsInEnum()
                     .WithMessage(ValidationMessages.EnumInvalido("El estado del autobús"));
         }
