@@ -5,16 +5,25 @@ using SGA.Application.Exceptions;
 using SGA.Persistence.Interfaces.Trips;
 using SGA.Domain.Enums;
 using SGA.Application.Interfaces.Trips;
+using FluentValidation;
 
 namespace SGA.Application.Services.Trips
 {
     public class RutaService : IRutaService
     {
         private readonly IRutaRepository _rutaRepository;
+        private readonly IValidator<CreateRutaDto> _createValidator;
+        private readonly IValidator<UpdateRutaDto> _updateValidator;
 
-      public RutaService(IRutaRepository rutaRepository)
+      public RutaService(
+          IRutaRepository rutaRepository,
+          IValidator<CreateRutaDto> createValidator,
+          IValidator<UpdateRutaDto> updateValidator)
         {
             _rutaRepository = rutaRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+
         }
 
         public async Task<OperationResult<IEnumerable<RutaDto>>> GetAllAsync()
@@ -65,6 +74,21 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<RutaDto>> CreateAsync(CreateRutaDto dto)
         {
+            
+            //Validar formato de los datos
+            var validacion =  _createValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<RutaDto>
+                {
+                    Success = false,
+                    Message = "Los datos de la ruta no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+                   
+            }
+
             await ValidarRutaUnicaAsync(dto.Nombre);
 
             if (dto.Nombre == "")
@@ -100,6 +124,18 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<RutaDto>> UpdateAsync(int id, UpdateRutaDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<RutaDto>
+                {
+                    Success = false,
+                    Message = "Datos de ruta no válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+            
             var rutaExistente = await _rutaRepository.GetByIdAsync(id);
 
             if (rutaExistente == null)
@@ -113,6 +149,7 @@ namespace SGA.Application.Services.Trips
                 };
 
             }
+
             await ValidarRutaUnicaAsync(dto.Nombre,id);
 
             rutaExistente.Id = dto.Id;
@@ -155,8 +192,6 @@ namespace SGA.Application.Services.Trips
                 Data = true
             };
         }
-
-
 
         private async Task ValidarRutaUnicaAsync(string nombre, int? idExcluir = null)
         {

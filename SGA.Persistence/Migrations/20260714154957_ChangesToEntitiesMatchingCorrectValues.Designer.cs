@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SGA.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SGA.Persistence.Context;
 namespace SGA.Persistence.Migrations
 {
     [DbContext(typeof(SGADB))]
-    partial class SGADBModelSnapshot : ModelSnapshot
+    [Migration("20260714154957_ChangesToEntitiesMatchingCorrectValues")]
+    partial class ChangesToEntitiesMatchingCorrectValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

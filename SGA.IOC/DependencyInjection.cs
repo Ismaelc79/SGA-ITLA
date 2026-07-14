@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SGA.Application.DTOs.Bus;
+using SGA.Application.DTOs.Parada;
+using SGA.Application.DTOs.Ruta;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
 using SGA.Application.Interfaces.Trips;
@@ -31,6 +33,10 @@ namespace SGA.IOC
             services.AddScoped<IValidator<CreateBusDto>, CreateBusDtoValidator>();
             services.AddScoped<IValidator<UpdateBusDto>, UpdateBusDtoValidator>();
             services.AddScoped<IValidator<BusStatusChangeDto>, BusStatusChangeDtoValidator>();
+            services.AddScoped<IValidator<CreateRutaDto> , CreateRutaDtoValidator>();
+            services.AddScoped<IValidator<UpdateRutaDto>, UpdateRutaDtoValidator>();
+            services.AddScoped<IValidator<CreateParadaDto> , CreateParadaDtoValidator>();
+            services.AddScoped<IValidator<UpdateParadaDto>, UpdateParadaDtoValidator>();
             return services;
 
         }

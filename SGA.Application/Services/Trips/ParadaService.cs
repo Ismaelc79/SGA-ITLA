@@ -1,4 +1,5 @@
-﻿using SGA.Application.DTOs.Parada;
+﻿using FluentValidation;
+using SGA.Application.DTOs.Parada;
 using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Base;
@@ -9,9 +10,18 @@ namespace SGA.Application.Services.Configuration
     public class ParadaService : IParadaService
     {
         private readonly IParadaRepository _paradaRepository;
-        public ParadaService(IParadaRepository paradaRepository)
+        private readonly IValidator<CreateParadaDto> _createValidator;
+        private readonly IValidator<UpdateParadaDto> _updateValidator;
+
+        public ParadaService(
+            IParadaRepository paradaRepository,
+            IValidator<CreateParadaDto> createValidator,
+            IValidator<UpdateParadaDto> updateValidator)
         {
             _paradaRepository = paradaRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+           
         }
 
         public async Task<OperationResult<IEnumerable<ParadaDto>>> GetAllAsync()
@@ -51,6 +61,18 @@ namespace SGA.Application.Services.Configuration
 
         public async Task<OperationResult<ParadaDto>> CreateAsync(CreateParadaDto dto)
         {
+           var validacion = _createValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<ParadaDto>
+                {
+                    Success = false,
+                    Message = "Los datos de la parada no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+            
             await ValidarParadaAsync(dto.Nombre);
 
             if (dto.Nombre == null)
@@ -85,6 +107,18 @@ namespace SGA.Application.Services.Configuration
 
         public async Task<OperationResult<ParadaDto>> UpdateAsync(int id, UpdateParadaDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<ParadaDto>
+                {
+                    Success = false,
+                    Message = "Los datos de la parada no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+            
             var paradaExistente = await _paradaRepository.GetByIdAsync(id);
 
             if (paradaExistente == null)

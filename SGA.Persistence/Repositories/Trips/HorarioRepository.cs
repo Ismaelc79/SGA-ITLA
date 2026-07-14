@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SGA.Domain.Entities.Configuration;
+using SGA.Domain.Enums;
 using SGA.Persistence.Context;
 using SGA.Persistence.Interfaces;
 using SGA.Persistence.Repositories.Common;
@@ -13,7 +14,7 @@ namespace SGA.Persistence.Repositories.Trips
                         
         }
 
-        public async Task<Horario?> GetByRutaDiaHoraAsync(int rutaId, string diasOperacion, DateTime HoraInicio)
+        public async Task<Horario?> GetByRutaDiaHoraAsync(int rutaId, DiasOperacion diasOperacion, TimeOnly HoraInicio)
         {
            return await _dbSet.FirstOrDefaultAsync(h =>
            h.RutaId == rutaId &&

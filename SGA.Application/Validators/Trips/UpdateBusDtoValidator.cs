@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
 using SGA.Application.DTOs.Bus;
 using SGA.Application.Validators.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SGA.Application.Validators.Trips
 {
