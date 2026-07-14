@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SGA.Application.DTOs.Bus;
+using SGA.Application.DTOs.Horario;
 using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
 using SGA.Application.Interfaces.Configuration;
@@ -37,6 +38,8 @@ namespace SGA.IOC
             services.AddScoped<IValidator<UpdateRutaDto>, UpdateRutaDtoValidator>();
             services.AddScoped<IValidator<CreateParadaDto> , CreateParadaDtoValidator>();
             services.AddScoped<IValidator<UpdateParadaDto>, UpdateParadaDtoValidator>();
+            services.AddScoped<IValidator<CreateHorarioDto> , CreateHorarioDtoValidator>();
+            services.AddScoped<IValidator<UpdateHorarioDto>, UpdateHorarioDtoValidator>();
             return services;
 
         }

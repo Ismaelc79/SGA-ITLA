@@ -1,4 +1,5 @@
-﻿using SGA.Application.DTOs.Horario;
+﻿using FluentValidation;
+using SGA.Application.DTOs.Horario;
 using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Base;
@@ -10,10 +11,17 @@ namespace SGA.Application.Services.Trips
     public class HorarioService : IHorarioService
     {
         private readonly IHorarioRepository _horarioRepository;
+        private readonly IValidator<CreateHorarioDto> _createValidator;
+        private readonly IValidator<UpdateHorarioDto> _updateValidator;
 
-        public HorarioService(IHorarioRepository horarioRepository)
+        public HorarioService(
+            IHorarioRepository horarioRepository,
+            IValidator<CreateHorarioDto> createValidator,
+            IValidator<UpdateHorarioDto> updateValidator)
         {
             _horarioRepository = horarioRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task<OperationResult<IEnumerable<HorarioDto>>> GetAllAsync()
@@ -53,6 +61,19 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<HorarioDto>> CreateAsync(CreateHorarioDto dto)
         {
+            //Validar formato de los datos
+            var validacion = _createValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<HorarioDto>
+                {
+                    Success = false,
+                    Message = "Los datos del horario no son válidos",
+                    Errors =   validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
             await ValidarHorarioExistente(
                 dto.RutaId,
                 dto.DiasOperacion,
@@ -80,6 +101,17 @@ namespace SGA.Application.Services.Trips
 
         public async Task<OperationResult<HorarioDto>> UpdateAsync(int id, UpdateHorarioDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+            if (!validacion.IsValid) 
+            {
+                return new OperationResult<HorarioDto>
+                {
+                    Success = false,
+                    Message = "Los datos del horario no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
             var horarioExistente = await _horarioRepository.GetByIdAsync(id);
 
             if (horarioExistente == null)

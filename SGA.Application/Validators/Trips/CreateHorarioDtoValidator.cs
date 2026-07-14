@@ -14,6 +14,8 @@ namespace SGA.Application.Validators.Trips
                     .WithMessage(ValidationMessages.MayorACero("La ruta asignada"));
 
             RuleFor(x => x.DiasOperacion)
+                .Must(dias => dias != DiasOperacion.Ninguno)
+                    .WithMessage("Debe seleccionar al menos un día de operación")
                 .Must(dias =>
                 {
                     var todosLosDias =
