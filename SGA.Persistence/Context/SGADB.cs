@@ -85,6 +85,10 @@ namespace SGA.Persistence.Context
                 .Property(x => x.EstadoTicket)
                 .HasConversion<string>();
 
+           modelBuilder.Entity<Horario>()
+                .Property(x => x.DiasOperacion) 
+                .HasConversion<string>();
+
             modelBuilder.Entity<Bus>(entity =>
             {
                 entity.Property(x => x.EstadoBus)

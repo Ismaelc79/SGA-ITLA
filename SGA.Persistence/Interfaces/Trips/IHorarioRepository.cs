@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Entities.Configuration;
+using SGA.Domain.Enums;
 using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces
@@ -8,7 +9,7 @@ namespace SGA.Persistence.Interfaces
 
         Task<Horario?> GetByRutaDiaHoraAsync(
                 int rutaId,
-                string diasOperacion,
-                DateTime HoraInicio);
+                DiasOperacion diasOperacion,
+                TimeOnly HoraInicio);
     }
 }

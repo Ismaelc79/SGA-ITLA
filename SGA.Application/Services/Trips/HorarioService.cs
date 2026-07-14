@@ -2,6 +2,7 @@
 using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Base;
+using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces;
 
 namespace SGA.Application.Services.Trips
@@ -133,8 +134,8 @@ namespace SGA.Application.Services.Trips
 
         private async Task ValidarHorarioExistente(
             int rutaId,
-            string diasOperacion,
-            DateTime horaInicio,
+            DiasOperacion diasOperacion,
+            TimeOnly horaInicio,
             int? idExcluir =null) 
         {
             var horarioExistente = await _horarioRepository.GetByRutaDiaHoraAsync(
