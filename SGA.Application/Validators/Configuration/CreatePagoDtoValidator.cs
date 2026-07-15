@@ -34,7 +34,7 @@ namespace SGA.Application.Validators.Configuration
                     .WithMessage(ValidationMessages.EnumInvalido("El estado de pago"));
 
             RuleFor(x => x.FechaHora)
-                .NotEqual(default(DateTime))
+                .NotEmpty()
                     .WithMessage(ValidationMessages.Requerido("La fecha y hora del pago"));
 
             RuleFor(x => x.FechaHora)

@@ -38,7 +38,7 @@ namespace SGA.Application.Validators.Configuration
                     .WithMessage(ValidationMessages.EnumRequerido("El estado de pago"));
 
             RuleFor(x => x.FechaHora)
-                .NotEqual(DateTime.Now)
+                .NotEmpty()
                     .WithMessage(ValidationMessages.Requerido("La fecha y hora del pago"));
 
             RuleFor(x => x.FechaHora)
