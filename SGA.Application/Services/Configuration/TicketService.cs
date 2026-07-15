@@ -1,17 +1,27 @@
-﻿using SGA.Application.DTOs.Ticket;
+﻿using FluentValidation;
+using SGA.Application.DTOs.Ticket;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
 using SGA.Persistence.Interfaces.Autorizations;
+using System.Xml.XPath;
 
 namespace SGA.Application.Services.Configuration
 {
     public class TicketService : ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly IValidator<CreateTicketDto> _createValidator;
+        private readonly IValidator<UpdateTicketDto> _updateValidator;
 
-        public TicketService(ITicketRepository ticketRepository)
+        public TicketService(
+            ITicketRepository ticketRepository, 
+            IValidator<CreateTicketDto> createValidator,
+            IValidator<UpdateTicketDto> updateValidator)
+            
         {
             _ticketRepository = ticketRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task<OperationResult<IEnumerable<TicketDto>>> GetAllAsync()
@@ -49,6 +59,20 @@ namespace SGA.Application.Services.Configuration
         }
         public async Task<OperationResult<TicketDto>> CreateAsync(CreateTicketDto dto)
         {
+            
+            var validacion = _createValidator.Validate(dto);
+
+            if (!validacion.IsValid) 
+            {
+                return new OperationResult<TicketDto>
+                {
+                    Success= false,
+                    Message = "Los datos del ticket no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
+            
             var ticket = new Domain.Entities.Authorization.Ticket
             {
                 EstudianteId = dto.EstudianteId,
@@ -73,6 +97,19 @@ namespace SGA.Application.Services.Configuration
 
         public async Task<OperationResult<TicketDto>> UpdateAsync(int id, UpdateTicketDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+
+            if (!validacion.IsValid) 
+            {
+                return new OperationResult<TicketDto>
+                {
+                    Success = false,
+                    Message = "Los datos del ticket no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+
+                };
+            }
+            
             var ticketExistente = await _ticketRepository.GetByIdAsync(id);
 
             if (ticketExistente == null)

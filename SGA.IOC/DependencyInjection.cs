@@ -5,6 +5,8 @@ using SGA.Application.DTOs.Horario;
 using SGA.Application.DTOs.Pago;
 using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
+using SGA.Application.DTOs.TarjetaRecargable;
+using SGA.Application.DTOs.Ticket;
 using SGA.Application.DTOs.Viaje;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Application.Interfaces.Trip;
@@ -49,6 +51,10 @@ namespace SGA.IOC
             services.AddScoped<IValidator<CreatePagoDto>, CreatePagoDtoValidator>();
             services.AddScoped<IValidator<UpdatePagoDto>, UpdatePagoDtoValidator>();
             services.AddScoped<IValidator<PagoStatusChangeDto>, PagoStatusChangeDtoValidator>();
+            services.AddScoped<IValidator<CreateTicketDto>, CreateTicketDtoValidator>();
+            services.AddScoped<IValidator<UpdateTicketDto>, UpdateTicketDtoValidator>();
+            services.AddScoped<IValidator<CreateTarjetaRecargableDto>, CreateTarjetaRecargableDtoValidator>();
+            services.AddScoped<IValidator<UpdateTarjetaRecargableDto>, UpdateTarjetaRecargableDtoValidator>();
             return services;
 
         }

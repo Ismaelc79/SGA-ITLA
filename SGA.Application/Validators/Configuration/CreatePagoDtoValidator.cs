@@ -14,6 +14,8 @@ namespace SGA.Application.Validators.Configuration
                     .WithMessage(ValidationMessages.MayorACero("El Id del estudiante"));
 
             RuleFor(x => x.MontoPago)
+                .NotEqual(0)
+                    .WithMessage("El monto no puede ser igual a 0")
                 .GreaterThan(0)
                     .WithMessage(ValidationMessages.MayorACero("El monto de pago"))
                 .LessThanOrEqualTo(10000)
