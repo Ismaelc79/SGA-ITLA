@@ -61,6 +61,17 @@ namespace SGA.Api.Controllers
 
         }
 
+        [HttpPatch("{id}/estado")]
+        public async Task<IActionResult> Put(int id, [FromBody] PagoStatusChangeDto dto) 
+        {
+            var result = await _pagoService.ChangeStatusAsync(id, dto);
+            if(!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id) 
         { 

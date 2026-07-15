@@ -146,7 +146,6 @@ namespace SGA.Application.Services.Trips
             }
 
             ValidarCambioEstado(viajeExistente.EstadoViaje, dto.EstadoViaje);
-            viajeExistente.EstadoViaje = dto.EstadoViaje;
 
             viajeExistente.IncidenciaId = dto.IncidenciaId;
             viajeExistente.EstadoViaje = dto.EstadoViaje;

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SGA.Application.DTOs.Bus;
 using SGA.Application.DTOs.Horario;
+using SGA.Application.DTOs.Pago;
 using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
 using SGA.Application.DTOs.Viaje;
@@ -10,6 +11,7 @@ using SGA.Application.Interfaces.Trip;
 using SGA.Application.Interfaces.Trips;
 using SGA.Application.Services.Configuration;
 using SGA.Application.Services.Trips;
+using SGA.Application.Validators.Configuration;
 using SGA.Application.Validators.Trips;
 
 
@@ -44,6 +46,9 @@ namespace SGA.IOC
             services.AddScoped<IValidator<CreateViajeDto>, CreateViajeDtoValidator>();
             services.AddScoped<IValidator<UpdateViajeDto>, UpdateViajeDtoValidator>();
             services.AddScoped<IValidator<ViajeStatusChangeDto>, ViajeStatusChangeDtoValidator>();
+            services.AddScoped<IValidator<CreatePagoDto>, CreatePagoDtoValidator>();
+            services.AddScoped<IValidator<UpdatePagoDto>, UpdatePagoDtoValidator>();
+            services.AddScoped<IValidator<PagoStatusChangeDto>, PagoStatusChangeDtoValidator>();
             return services;
 
         }
