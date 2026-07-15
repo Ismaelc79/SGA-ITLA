@@ -32,7 +32,7 @@ namespace SGA.Persistence.Context
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<Notificaciones> Notificaciones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,11 +51,11 @@ namespace SGA.Persistence.Context
             modelBuilder.Entity<Autorizacion>().ToTable("Viaje");
 
             modelBuilder.Entity<Autorizacion>().ToTable("Conductor");
-            modelBuilder.Entity<Autorizacion>().ToTable("Empleadp");
+            modelBuilder.Entity<Autorizacion>().ToTable("Empleado");
             modelBuilder.Entity<Autorizacion>().ToTable("Estudiante");
             modelBuilder.Entity<Autorizacion>().ToTable("Rol");
             modelBuilder.Entity<Autorizacion>().ToTable("Usuario");
-            modelBuilder.Entity<Notificacion>().ToTable("Notificaciones");
+            modelBuilder.Entity<Notificaciones>().ToTable("Notificaciones");
 
             modelBuilder.Entity<Autorizacion>()
                 .Property(x => x.Estado)

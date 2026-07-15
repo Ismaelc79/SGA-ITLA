@@ -3,7 +3,7 @@ using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Notifications
 {
-    public interface INotificacionRepository : IBaseRepository<Notificacion>
+    public interface INotificacionRepository : IBaseRepository<Notificaciones>
     {
     }
 }

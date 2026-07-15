@@ -1,0 +1,6 @@
+@SGA.Api.Desktop.Server_HostAddress = http://localhost:5192
+
+GET {{SGA.Api.Desktop.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

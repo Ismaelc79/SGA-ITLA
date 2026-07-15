@@ -16,5 +16,6 @@
     <Project Path="SGA.Application.Test/SGA.Application.Test.csproj" />
     <Project Path="SGA.Persistence.Test/SGA.Persistence.Test.csproj" />
   </Folder>
+  <Project Path="SGA.Api.Desktop.Server/SGA.Api.Desktop.Server.csproj" Id="3cc9fb2c-393d-4981-833b-95c0dce2e8d6" />
   <Project Path="SGA.Desktop/SGA.Desktop.csproj" Id="8bb2f49e-65ba-4ca6-8061-5a7d71f8f04e" />
 </Solution>

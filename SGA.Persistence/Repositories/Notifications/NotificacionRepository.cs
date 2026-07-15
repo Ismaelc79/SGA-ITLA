@@ -5,10 +5,11 @@ using SGA.Domain.Notifications;
 
 namespace SGA.Persistence.Repositories.Notifications
 {
-    public class NotificacionRepository : BaseRepository<Notificacion>, INotificacionRepository
+    public class NotificacionRepository : BaseRepository<Notificaciones>, INotificacionRepository
     {
         public NotificacionRepository(SGADB context) : base(context)
         {
+
         }
     }
 }

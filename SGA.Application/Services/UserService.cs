@@ -20,18 +20,19 @@ namespace SGA.Application.Services
         {
             var usuarios = await _usuarioRepository.GetAllAsync();
 
-            var resultado = usuarios.Select(u => new UserDto
+            return usuarios.Select(u => new UserDto
             {
                 Id = u.Id,
                 UserName = u.Nombre,
                 Email = u.Email
             }).ToList();
-
-            return resultado;
         }
 
         public async Task<UserDto> GetByIdAsync(int id)
         {
+            if (id <= 0)
+                throw new Exception("El ID del usuario no es válido.");
+
             var usuario = await _usuarioRepository.GetByIdAsync(id);
 
             if (usuario == null)
@@ -47,6 +48,15 @@ namespace SGA.Application.Services
 
         public async Task AddAsync(SaveUserDto userDto)
         {
+            if (string.IsNullOrWhiteSpace(userDto.UserName))
+                throw new Exception("El nombre de usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(userDto.Email))
+                throw new Exception("El correo es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(userDto.Password))
+                throw new Exception("La contraseña es obligatoria.");
+
             var usuario = new Usuario
             {
                 Nombre = userDto.UserName,
@@ -62,12 +72,42 @@ namespace SGA.Application.Services
 
         public async Task UpdateAsync(UpdateUserDto userDto)
         {
-        
+            if (userDto.Id <= 0)
+                throw new Exception("El ID del usuario no es válido.");
+
+            var usuario = await _usuarioRepository.GetByIdAsync(userDto.Id);
+
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            if (string.IsNullOrWhiteSpace(userDto.UserName))
+                throw new Exception("El nombre de usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(userDto.Email))
+                throw new Exception("El correo es obligatorio.");
+
+            usuario.Nombre = userDto.UserName;
+            usuario.Email = userDto.Email;
+
+            if (!string.IsNullOrWhiteSpace(userDto.Password))
+            {
+                usuario.PasswordHash = userDto.Password;
+            }
+
+            await _usuarioRepository.UpdateAsync(usuario);
         }
 
         public async Task DeleteAsync(int id)
         {
-            
+            if (id <= 0)
+                throw new Exception("El ID del usuario no es válido.");
+
+            var usuario = await _usuarioRepository.GetByIdAsync(id);
+
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            await _usuarioRepository.DeleteAsync(usuario);
         }
     }
 }

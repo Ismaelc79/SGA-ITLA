@@ -2,6 +2,7 @@
 using SGA.Application.Interfaces;
 using SGA.Persistence.Interfaces.Notifications;
 using SGA.Domain.Notifications;
+using SGA.Domain.Enums;
 
 namespace SGA.Application.Services
 {
@@ -21,18 +22,25 @@ namespace SGA.Application.Services
             return notifications.Select(n => new NotificationDto
             {
                 Id = n.Id,
-                Message = n.Message,
-                IsRead = n.IsRead
+                Message = n.Descripcion
             }).ToList();
         }
 
         public async Task AddAsync(SaveNotificationDto notificationDto)
         {
-            var notification = new Notificacion
+            if (notificationDto.UserId <= 0)
+                throw new Exception("El usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(notificationDto.Message))
+                throw new Exception("El mensaje es obligatorio.");
+
+            var notification = new Notificaciones
             {
-                Message = notificationDto.Message,
-                UserId = notificationDto.UserId,
-                IsRead = false
+                UsuarioId = notificationDto.UserId,
+                Nombre = notificationDto.Message,
+                Descripcion = notificationDto.Message,
+                TipoNotificacion = TipoNotificacion.Informativa,
+                FechaHora = DateTime.Now
             };
 
             await _notificationRepository.AddAsync(notification);
@@ -40,25 +48,40 @@ namespace SGA.Application.Services
 
         public async Task UpdateAsync(UpdateNotificationDto notificationDto)
         {
-            var notification = new Notificacion
-            {
-                Id = notificationDto.Id,
-                Message = notificationDto.Message,
-                UserId = notificationDto.UserId,
-                IsRead = false
-            };
+            if (notificationDto.Id <= 0)
+                throw new Exception("El ID de la notificación no es válido.");
+
+            var notification = await _notificationRepository.GetByIdAsync(notificationDto.Id);
+
+            if (notification == null)
+                throw new Exception("Notificación no encontrada.");
+
+            if (notificationDto.UserId <= 0)
+                throw new Exception("El usuario es obligatorio.");
+
+            if (string.IsNullOrWhiteSpace(notificationDto.Message))
+                throw new Exception("El mensaje es obligatorio.");
+
+            notification.UsuarioId = notificationDto.UserId;
+            notification.Nombre = notificationDto.Message;
+            notification.Descripcion = notificationDto.Message;
+            notification.TipoNotificacion = TipoNotificacion.Informativa;
+            notification.FechaHora = DateTime.Now;
 
             await _notificationRepository.UpdateAsync(notification);
         }
 
         public async Task DeleteAsync(int id)
         {
+            if (id <= 0)
+                throw new Exception("El ID de la notificación no es válido.");
+
             var notification = await _notificationRepository.GetByIdAsync(id);
 
-            if (notification != null)
-            {
-                await _notificationRepository.DeleteAsync(notification);
-            }
+            if (notification == null)
+                throw new Exception("Notificación no encontrada.");
+
+            await _notificationRepository.DeleteAsync(notification);
         }
     }
 }
