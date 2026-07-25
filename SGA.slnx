@@ -21,4 +21,7 @@
     <Project Path="SGA.Application.Test/SGA.Application.Test.csproj" />
     <Project Path="SGA.Persistence.Test/SGA.Persistence.Test.csproj" />
   </Folder>
+  <Folder Name="/SGA.Web/">
+    <Project Path="SGA.Web.App/SGA.Web.App.csproj" Id="c1c027bd-75cc-4103-850a-1c248d4ce656" />
+  </Folder>
 </Solution>
