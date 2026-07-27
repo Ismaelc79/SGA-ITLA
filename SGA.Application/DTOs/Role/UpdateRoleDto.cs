@@ -1,11 +1,8 @@
-﻿namespace SGA.Application.Dtos.Role
+﻿namespace SGA.Application.DTOs.Role
 {
-    public class RoleDto
+    public class UpdateRoleDto
     {
-        public int Id { get; set; }
-
         public string Nombre { get; set; }
-
         public string? Descripcion { get; set; }
     }
 }
