@@ -1,6 +1,6 @@
-﻿namespace SGA.Application.Dtos.Authorization
+﻿namespace SGA.Application.DTOs.Authorization
 {
-    public class SaveAutorizacionDto
+    public class UpdateAutorizacionDto
     {
         public int UsuarioId { get; set; }
         public string Tipo { get; set; }

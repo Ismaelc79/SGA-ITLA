@@ -1,6 +1,4 @@
 using SGA.Persistence.ServiceExtensions;
-using SGA.Application.Interfaces;
-using SGA.Application.Services;
 using SGA.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,8 +13,6 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddDependencyInjection();
 
