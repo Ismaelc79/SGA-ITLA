@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/IOC/">
+    <Project Path="SGA.IOC/SGA.IOC.csproj" />
+  </Folder>
+  <Folder Name="/SGA.Api/">
+    <Project Path="SGA.Api/SGA.Api.csproj" />
+  </Folder>
   <Folder Name="/SGA.Application/">
     <Project Path="SGA.Application/SGA.Application.csproj" />
   </Folder>

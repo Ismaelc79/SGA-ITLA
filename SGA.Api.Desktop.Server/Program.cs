@@ -1,6 +1,7 @@
 using SGA.Persistence.ServiceExtensions;
 using SGA.Application.Interfaces;
 using SGA.Application.Services;
+using SGA.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -19,7 +20,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddDependencyInjection();
 
 builder.Services.AddAuthentication(options =>
 {

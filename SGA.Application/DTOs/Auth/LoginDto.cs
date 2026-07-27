@@ -1,4 +1,4 @@
-﻿namespace SGA.Application.Dtos.Auth
+﻿namespace SGA.Application.DTOs.Auth
 {
     public class LoginDto
     {

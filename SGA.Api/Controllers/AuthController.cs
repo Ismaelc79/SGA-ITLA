@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGA.Application.Dtos.Auth;
-using SGA.Application.Interfaces;
+using SGA.Application.DTOs.Auth;
+using SGA.Application.Interfaces.Auth;
 
-namespace SGA.Api.Desktop.Server.Controllers
+namespace SGA.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -16,10 +16,14 @@ namespace SGA.Api.Desktop.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var result = await _authService.LoginAsync(dto);
 
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
             return Ok(result);
         }
     }
