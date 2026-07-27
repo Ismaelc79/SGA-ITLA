@@ -1,9 +1,9 @@
 using System;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
-using SGA.Application.Interfaces;
+using SGA.Application.Interfaces.Notification;
 using SGA.Application.Interfaces.User;
-using SGA.Application.Services;
+using SGA.Application.Services.Notification;
 using SGA.Application.Services.User;
 using SGA.Desktop.Services;
 
