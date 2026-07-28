@@ -1,25 +1,20 @@
+using SGA.IOC;
 using SGA.Application.Interfaces.Trip;
 using SGA.Application.Services.Trips;
+using SGA.Persistence.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient("Api", client =>
-{
-    client.BaseAddress =
-        new Uri("https://localhost:7001/api/");
-});
-
-var app = builder.Build();
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddDependencyInjection();
 
 builder.Services.AddDistributedMemoryCache();
-
 builder.Services.AddSession();
-builder.Services.AddScoped<IBusService, BusService>();
 
-
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -32,7 +27,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -43,6 +37,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

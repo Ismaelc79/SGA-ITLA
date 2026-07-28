@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGA.Application.Services.Trips;
+using SGA.Application.Interfaces.Trip;
+using SGA.Web.App.Models;
 
 
 namespace SGA.Web.App.Controllers
 {
     public class BusController : Controller
     {
-        private readonly BusService _busService;
-        public BusController(BusService busService)
+        private readonly IBusService _busService;
+        public BusController(IBusService busService)
         {
             _busService = busService;
         }
@@ -23,7 +24,18 @@ namespace SGA.Web.App.Controllers
                 return View();
             }
 
-            return View(buses.Data);
+            var viewModel = buses.Data.Select(b => new BusViewModel
+            {
+                Id = b.Id,
+                ConductorId = b.ConductorId,
+                Placa = b.Placa,
+                Marca = b.Marca,
+                Modelo = b.Modelo,
+                Capacidad = b.Capacidad,
+                EstadoBus = b.EstadoBus
+            });
+
+            return View(viewModel);
         }
 
         // GET: BusController/Details/5

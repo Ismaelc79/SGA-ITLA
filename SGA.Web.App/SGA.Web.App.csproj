@@ -9,6 +9,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SGA.Application\SGA.Application.csproj" />
     <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
+    <ProjectReference Include="..\SGA.IOC\SGA.IOC.csproj" />
+    <ProjectReference Include="..\SGA.Persistence\SGA.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
