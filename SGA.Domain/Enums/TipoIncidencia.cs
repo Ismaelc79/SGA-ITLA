@@ -3,6 +3,7 @@ namespace SGA.Domain.Enums
 {
     public enum TipoIncidencia
     {
+        Ninguno = 0,
         Averia = 1,
         Accidente = 2,
         Retraso = 3,
