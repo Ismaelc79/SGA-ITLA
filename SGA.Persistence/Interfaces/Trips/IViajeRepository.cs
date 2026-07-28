@@ -1,13 +1,11 @@
 ﻿using SGA.Domain.Entities.Trip;
-using SGA.Persistence.Repository.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SGA.Domain.Enums;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Trips
 {
     public interface IViajeRepository: IBaseRepository<Viaje>
     {
-
+        Task<IEnumerable<Viaje>> GetByEstadoAsync(EstadoViaje estado);
     }
 }

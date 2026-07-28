@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Entities.Configuration;
+using SGA.Domain.Enums;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces
 {
-    internal class IHorarioRepository
+    public interface  IHorarioRepository : IBaseRepository<Horario>
     {
+
+        Task<Horario?> GetByRutaDiaHoraAsync(
+                int rutaId,
+                DiasOperacion diasOperacion,
+                TimeOnly HoraInicio);
     }
 }

@@ -1,14 +1,14 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Enums;
 
 namespace SGA.Domain.Entities.Configuration
 {
     public class Horario : AuditEntity
     {
-        public int HorarioId { get; set; }
         public int RutaId { get; set; }
-        public string DiasOperacion { get; set; }
-        public DateTime HoraInicio { get; set; }
-        public DateTime HoraFin { get; set; }
+        public DiasOperacion DiasOperacion { get; set; }
+        public TimeOnly HoraInicio { get; set; }
+        public TimeOnly HoraFin { get; set; }
 
     }
 }

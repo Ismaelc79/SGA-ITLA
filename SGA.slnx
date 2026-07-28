@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/IOC/">
+    <Project Path="SGA.IOC/SGA.IOC.csproj" Id="9bb62311-2c3d-4bff-8069-44e25c45aac4" />
+  </Folder>
   <Folder Name="/SGA.Api/">
     <Project Path="SGA.Api/SGA.Api.csproj" />
   </Folder>
@@ -8,7 +11,6 @@
   <Folder Name="/SGA.Domain/">
     <Project Path="SGA.Domain/SGA.Domain.csproj" />
   </Folder>
-  <Folder Name="/SGA.Infraestructure/" />
   <Folder Name="/SGA.Model/">
     <Project Path="SGA.Model/SGA.Model.csproj" />
   </Folder>
@@ -20,6 +22,6 @@
     <Project Path="SGA.Persistence.Test/SGA.Persistence.Test.csproj" />
   </Folder>
   <Folder Name="/SGA.Web/">
-    <Project Path="SGA.Web/SGA.Web.csproj" />
+    <Project Path="SGA.Web.App/SGA.Web.App.csproj" Id="c1c027bd-75cc-4103-850a-1c248d4ce656" />
   </Folder>
 </Solution>

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Entities.Trip;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Trips
 {
-    internal interface IIncidenciaRepository
+    public interface IIncidenciaRepository : IBaseRepository<Incidencia>
     {
     }
 }

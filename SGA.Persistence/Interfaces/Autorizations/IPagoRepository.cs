@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Entities.Authorization;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Autorizations
 {
-    internal class IPagoRepository
+    public interface IPagoRepository : IBaseRepository<Pago>
     {
     }
 }

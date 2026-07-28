@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Entities.Configuration;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Trips
 {
-    internal class IRutaRepository
+    public interface IRutaRepository : IBaseRepository<Ruta>
     {
+         Task<IEnumerable<Ruta>> GetByDisponibleAsync();
+         Task<Ruta> GetByNombreAsync(string nombre);
     }
 }

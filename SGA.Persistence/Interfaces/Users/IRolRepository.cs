@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Entities.Users;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Users
 {
-    internal class IRolRepository
+    public interface IRolRepository : IBaseRepository<Rol>
     {
     }
 }

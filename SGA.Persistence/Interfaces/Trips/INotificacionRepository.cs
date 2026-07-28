@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SGA.Domain.Notifications;
+using SGA.Persistence.Base;
 
 namespace SGA.Persistence.Interfaces.Trips
 {
-    internal class INotificacionRepository
+    public interface  INotificacionRepository : IBaseRepository<Notificaciones>
     {
     }
 }
