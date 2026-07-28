@@ -1,25 +1,25 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using SGA.Application.DTOs.Auth;
 using SGA.Application.DTOs.Authorization;
 using SGA.Application.DTOs.Notification;
 using SGA.Application.DTOs.Role;
-using SGA.Application.DTOs.User;
+using SGA.Application.DTOs.Auth;
 using SGA.Application.Interfaces.Auth;
-using SGA.Application.Interfaces.Authorization;
-using SGA.Application.Interfaces.Notification;
-using SGA.Application.Interfaces.Role;
-using SGA.Application.Interfaces.User;
 using SGA.Application.Services.Auth;
-using SGA.Application.Services.Authorization;
-using SGA.Application.Services.Notification;
-using SGA.Application.Services.Role;
-using SGA.Application.Services.User;
 using SGA.Application.Validators.Auth;
 using SGA.Application.Validators.Authorization;
 using SGA.Application.Validators.Notification;
 using SGA.Application.Validators.Role;
 using SGA.Application.Validators.User;
+using SGA.Application.Interfaces.User;
+using SGA.Application.Services.User;
+using SGA.Application.Interfaces.Role;
+using SGA.Application.Services.Role;
+using SGA.Application.Interfaces.Notification;
+using SGA.Application.Services.Notification;
+using SGA.Application.Interfaces.Authorization;
+using SGA.Application.Services.Authorization;
+using SGA.Application.DTOs.User;
 
 namespace SGA.IOC
 {
