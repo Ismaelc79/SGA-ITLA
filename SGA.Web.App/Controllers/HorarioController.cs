@@ -50,6 +50,14 @@ namespace SGA.Web.App.Controllers
         // GET: Horario/Create
         public IActionResult Create()
         {
+            ViewBag.DiasOperacion = Enum.GetValues(typeof(DiasOperacion))
+             .Cast<DiasOperacion>()
+             .Select(e => new SelectListItem
+             {
+                 Value = e.ToString(),
+                 Text = e.ToString()
+             });
+
             return View(new CreateHorarioDto());
         }
 
@@ -60,11 +68,12 @@ namespace SGA.Web.App.Controllers
         {
             try
             {
+             
                 if (!ModelState.IsValid)
                 {
                     return View(horario);
                 }
-
+              
                 var resultado = await _horarioService.CreateAsync(horario);
 
                 if (!resultado.Success)
@@ -72,11 +81,12 @@ namespace SGA.Web.App.Controllers
                     ViewBag.Error = resultado.Message;
                     return View(horario);
                 }
-
+               
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+
                 return View(horario);
             }
         }
@@ -102,7 +112,7 @@ namespace SGA.Web.App.Controllers
                 HoraFin = dto.HoraFin,
             };
 
-            ViewBag.Estados = Enum.GetValues(typeof(DiasOperacion))
+            ViewBag.DiasOperacion = Enum.GetValues(typeof(DiasOperacion))
               .Cast<DiasOperacion>()
               .Select(e => new SelectListItem
               {

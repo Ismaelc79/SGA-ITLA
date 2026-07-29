@@ -10,14 +10,13 @@
 <hr />
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Edit" asp-route-id="@Model.RutaId" method="post">
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="RutaId" />
-
             <div class="form-group mb-3">
-                <label asp-for="RutaId" class="control-label"></label>
-                <input asp-for="RutaId" class="form-control" />
-                <span asp-validation-for="RutaId" class="text-danger"></span>
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="RutaId" class="control-label"></label>
@@ -26,7 +25,7 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="DiasOperacion" class="control-label"></label>
-                <input asp-for="DiasOperacion" class="form-control" asp-items="@(ViewBag.Estados as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)"> />
+                <select asp-for="DiasOperacion" class="form-control" asp-items="@(ViewBag.DiasOperacion as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)"></select>
                 <span asp-validation-for="DiasOperacion" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">

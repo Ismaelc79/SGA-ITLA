@@ -1,6 +1,7 @@
 ﻿
 namespace SGA.Domain.Enums
 {
+    [Flags]
     public enum DiasOperacion
     {
         Ninguno = 0,
@@ -9,6 +10,6 @@ namespace SGA.Domain.Enums
         Miercoles = 4,
         Jueves = 8,
         Viernes = 16,
-        Sabados = 32,
+        Sabado = 32,
     }
 }

@@ -1,5 +1,98 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using SGA.Application.DTOs.Ticket
+@model IEnumerable<TicketDto>
+
 @{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tickets</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+</p>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstudianteId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParadaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PagoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstadoTicket)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCierre)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.EstudianteId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RutaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ParadaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.PagoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.EstadoTicket)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FechaInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FechaCierre)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

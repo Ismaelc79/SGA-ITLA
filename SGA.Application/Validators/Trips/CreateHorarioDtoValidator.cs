@@ -24,7 +24,7 @@ namespace SGA.Application.Validators.Trips
                     DiasOperacion.Miercoles |
                     DiasOperacion.Jueves |
                     DiasOperacion.Viernes |
-                    DiasOperacion.Sabados;
+                    DiasOperacion.Sabado;
                     return (dias & ~todosLosDias) == 0;
                 })
                     .WithMessage("Los días seleccionados no son válidos");
