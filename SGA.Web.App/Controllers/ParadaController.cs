@@ -1,142 +1,135 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
 using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Enums;
 
 namespace SGA.Web.App.Controllers
 {
-    public class RutaController : Controller
+    public class ParadaController : Controller
     {
-        private readonly IRutaService _rutaService;
+        private readonly IParadaService _paradaService;
 
-        public RutaController(IRutaService rutaService)
+        public ParadaController(IParadaService paradaService)
         {
-            _rutaService = rutaService;
+            _paradaService = paradaService;
         }
 
-        // GET: Ruta
+        // GET: Parada
         public async Task<IActionResult> Index()
         {
-            var ruta = await _rutaService.GetAllAsync();
+            var parada = await _paradaService.GetAllAsync();
 
-            if (!ruta.Success)
+            if (!parada.Success)
             {
-                ViewBag.Error = ruta.Message;
-                return View(new List<RutaDto>());
+                ViewBag.Error = parada.Message;
+                return View(new List<ParadaDto>());
             }
 
-            IEnumerable<RutaDto> resultado = ruta.Data!;
+            IEnumerable<ParadaDto> resultado = parada.Data!;
 
-            ViewBag.Ruta = ruta;
+            ViewBag.Ruta = parada;
 
             return View(resultado.ToList());
         }
 
-        // GET: Ruta/Details/5
+        // GET: Parada/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var ruta = await _rutaService.GetByIdAsync(id);
+            var parada = await _paradaService.GetByIdAsync(id);
 
-            if (!ruta.Success)
+            if (!parada.Success)
             {
-                ViewBag.Error = ruta.Message;
+                ViewBag.Error = parada.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(ruta.Data);
+            return View(parada.Data);
         }
 
-        // GET: Ruta/Create
+        // GET: Parada/Create
         public IActionResult Create()
         {
-            return View(new CreateRutaDto());
+            return View(new CreateParadaDto());
         }
 
-        // POST: Ruta/Create
+        // POST: Parada/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateRutaDto ruta)
+        public async Task<IActionResult> Create(CreateParadaDto parada)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(ruta);
+                    return View(parada);
                 }
 
-                var resultado = await _rutaService.CreateAsync(ruta);
+                var resultado = await _paradaService.CreateAsync(parada);
 
                 if (!resultado.Success)
                 {
                     ViewBag.Error = resultado.Message;
-                    return View(ruta);
+                    return View(parada);
                 }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(ruta);
+                return View(parada);
             }
         }
 
-        // GET: Ruta/Edit/5
+        // GET: Parada/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var ruta = await _rutaService.GetByIdAsync(id);
+            var parada = await _paradaService.GetByIdAsync(id);
 
-            if (!ruta.Success)
+            if (!parada.Success)
             {
-                ViewBag.Error = ruta.Message;
+                ViewBag.Error = parada.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            var dto = ruta.Data!;
+            var dto = parada.Data!;
 
-            var editar = new UpdateRutaDto
+            var editar = new UpdateParadaDto
             {
-               Id = dto.Id,
-               Nombre = dto.Nombre,
-               Descripcion = dto.Descripcion,
-               EstadoRuta = dto.EstadoRuta,
-               RutaOrigen = dto.RutaOrigen,
-               RutaDestino = dto.RutaDestino
+                Id = dto.Id,
+                RutaId = dto.RutaId,
+                Nombre = dto.Nombre,
+                Ubicacion = dto.Ubicacion,
+                OrdenParada = dto.OrdenParada,
+                Estado = dto.Estado
             };
-
-            ViewBag.Estados = Enum.GetValues(typeof(EstadoRuta))
-                .Cast<EstadoRuta>()
-                .Select(e => new SelectListItem
-                {
-                    Value = e.ToString(),
-                    Text = e.ToString()
-                });
-
+                        
             ViewBag.Id = id;
 
             return View(editar);
         }
 
-        // POST: Ruta/Edit/5
+        // POST: Parada/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateRutaDto ruta)
+        public async Task<IActionResult> Edit(int id, UpdateParadaDto parada)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     ViewBag.Id = id;
-                    return View(ruta);
+                    return View(parada);
                 }
 
-                var resultado = await _rutaService.UpdateAsync(id, ruta);
+                var resultado = await _paradaService.UpdateAsync(id, parada);
 
                 if (!resultado.Success)
                 {
                     ViewBag.Error = resultado.Message;
                     ViewBag.Id = id;
-                    return View(ruta);
+                    return View(parada);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -144,32 +137,32 @@ namespace SGA.Web.App.Controllers
             catch
             {
                 ViewBag.Id = id;
-                return View(ruta);
+                return View(parada);
             }
         }
 
-        // GET: Ruta/Delete/5
+        // GET: Parada/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var ruta = await _rutaService.GetByIdAsync(id);
+            var parada = await _paradaService.GetByIdAsync(id);
 
-            if (!ruta.Success)
+            if (!parada.Success)
             {
-                ViewBag.Error = ruta.Message;
+                ViewBag.Error = parada.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(ruta.Data);
+            return View(parada.Data);
         }
 
-        // POST: Ruta/Delete/5
+        // POST: Parada/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
-                var resultado = await _rutaService.DeleteAsync(id);
+                var resultado = await _paradaService.DeleteAsync(id);
 
                 if (!resultado.Success)
                 {
