@@ -41,11 +41,7 @@ namespace SGA.Application.Validators.Configuration
                 .NotEqual(default(DateTime))
                     .WithMessage(ValidationMessages.Requerido("La fecha de fin de vigencia"))
                 .GreaterThan(x => x.FechaVigenteInicio)
-                    .WithMessage("La fecha de vin de vigencia debe ser posterior a la fecha de inicio")
-                .NotEqual(DateTime.Now)
-                    .WithMessage("La fecha de fin de vigencia no puede ser la fecha actual");
-
-            
+                    .WithMessage("La fecha de vin de vigencia debe ser posterior a la fecha de inicio");
         }
     }
 }

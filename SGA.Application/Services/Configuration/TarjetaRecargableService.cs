@@ -113,7 +113,7 @@ namespace SGA.Application.Services.Configuration
                 };
             }
 
-            tarjetaExistente.Id  = dto.Id;
+            tarjetaExistente.Id = dto.Id;
             tarjetaExistente.EstudianteId = dto.EstudianteId;
             tarjetaExistente.PagoId = dto.PagoId;
             tarjetaExistente.MontoTarjeta = dto.MontoTarjeta;

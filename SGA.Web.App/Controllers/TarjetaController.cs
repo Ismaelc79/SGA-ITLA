@@ -1,123 +1,120 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SGA.Application.DTOs.Ruta;
-using SGA.Application.DTOs.Ticket;
+using SGA.Application.DTOs.TarjetaRecargable;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Enums;
 
 namespace SGA.Web.App.Controllers
 {
-    public class TicketController : Controller
+    public class TarjetaController : Controller
     {
-        private readonly ITicketService _ticketService;
+        private readonly ITarjetaRecargableService _tarjetaService;
 
-        public TicketController(ITicketService ticketService)
+        public TarjetaController(ITarjetaRecargableService tarjetaService)
         {
-            _ticketService = ticketService;
+            _tarjetaService = tarjetaService;
         }
 
-        // GET: Ticket
+        // GET: Tarjeta
         public async Task<IActionResult> Index()
         {
-            var ticket = await _ticketService.GetAllAsync();
+            var tarjeta = await _tarjetaService.GetAllAsync();
 
-            if (!ticket.Success)
+            if (!tarjeta.Success)
             {
-                ViewBag.Error = ticket.Message;
-                return View(new List<TicketDto>());
+                ViewBag.Error = tarjeta.Message;
+                return View(new List<TarjetaRecargableDto>());
             }
 
-            IEnumerable<TicketDto> resultado = ticket.Data!;
+            IEnumerable<TarjetaRecargableDto> resultado = tarjeta.Data!;
 
-            ViewBag.Ticket = ticket;
+            ViewBag.Ticket = tarjeta;
 
             return View(resultado.ToList());
         }
 
-        // GET: Ticket/Details/5
+        // GET: Tarjeta/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var ticket = await _ticketService.GetByIdAsync(id);
+            var tarjeta = await _tarjetaService.GetByIdAsync(id);
 
-            if (!ticket.Success)
+            if (!tarjeta.Success)
             {
-                ViewBag.Error = ticket.Message;
+                ViewBag.Error = tarjeta.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(ticket.Data);
+            return View(tarjeta.Data);
         }
 
-        // GET: Ticket/Create
+        // GET: Tarjeta/Create
         public IActionResult Create()
         {
-            ViewBag.Estados = Enum.GetValues(typeof(EstadoTicket))
-               .Cast<EstadoTicket>()
+            ViewBag.Estados = Enum.GetValues(typeof(EstadoTarjeta))
+               .Cast<EstadoTarjeta>()
                .Select(e => new SelectListItem
                {
                    Value = e.ToString(),
                    Text = e.ToString()
                });
 
-            return View(new CreateTicketDto());
+            return View(new CreateTarjetaRecargableDto());
         }
 
-        // POST: Ticket/Create
+        // POST: Tarjeta/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateTicketDto ticket)
+        public async Task<IActionResult> Create(CreateTarjetaRecargableDto tarjeta)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(ticket);
+                    return View(tarjeta);
                 }
 
-                var resultado = await _ticketService.CreateAsync(ticket);
+                var resultado = await _tarjetaService.CreateAsync(tarjeta);
 
                 if (!resultado.Success)
                 {
                     ViewBag.Error = resultado.Message;
-                    return View(ticket);
+                    return View(tarjeta);
                 }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(ticket);
+                return View(tarjeta);
             }
         }
 
-        // GET: Ticket/Edit/5
+        // GET: Tarjeta/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var ticket = await _ticketService.GetByIdAsync(id);
+            var tarjeta = await _tarjetaService.GetByIdAsync(id);
 
-            if (!ticket.Success)
+            if (!tarjeta.Success)
             {
-                ViewBag.Error = ticket.Message;
+                ViewBag.Error = tarjeta.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            var dto = ticket.Data!;
+            var dto = tarjeta.Data!;
 
-            var editar = new UpdateTicketDto
+            var editar = new UpdateTarjetaRecargableDto
             {
                 Id = dto.Id,
                 EstudianteId = dto.EstudianteId,
-                RutaId = dto.RutaId,
-                ParadaId = dto.ParadaId,
                 PagoId = dto.PagoId,
-                Tipo = dto.Tipo,
-                EstadoTicket = dto.EstadoTicket,
-                FechaInicio = dto.FechaInicio,
-                FechaCierre = dto.FechaCierre
+                MontoTarjeta = dto.MontoTarjeta,
+                EstadoTarjeta = dto.EstadoTarjeta,
+                FechaVigenteInicio = dto.FechaVigenteInicio,
+                FechaVigenteFin = dto.FechaVigenteFin
             };
 
-            ViewBag.Estados = Enum.GetValues(typeof(EstadoTicket))
-                .Cast<EstadoTicket>()
+            ViewBag.Estados = Enum.GetValues(typeof(EstadoTarjeta))
+                .Cast<EstadoTarjeta>()
                 .Select(e => new SelectListItem
                 {
                     Value = e.ToString(),
@@ -129,26 +126,26 @@ namespace SGA.Web.App.Controllers
             return View(editar);
         }
 
-        // POST: Ticket/Edit/5
+        // POST: Tarjeta/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateTicketDto ticket)
+        public async Task<IActionResult> Edit(int id, UpdateTarjetaRecargableDto tarjeta)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     ViewBag.Id = id;
-                    return View(ticket);
+                    return View(tarjeta);
                 }
 
-                var resultado = await _ticketService.UpdateAsync(id, ticket);
+                var resultado = await _tarjetaService.UpdateAsync(id, tarjeta);
 
                 if (!resultado.Success)
                 {
                     ViewBag.Error = resultado.Message;
                     ViewBag.Id = id;
-                    return View(ticket);
+                    return View(tarjeta);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -156,32 +153,32 @@ namespace SGA.Web.App.Controllers
             catch
             {
                 ViewBag.Id = id;
-                return View(ticket);
+                return View(tarjeta);
             }
         }
 
-        // GET: Ticket/Delete/5
+        // GET: Tarjeta/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var ticket = await _ticketService.GetByIdAsync(id);
+            var tarjeta = await _tarjetaService.GetByIdAsync(id);
 
-            if (!ticket.Success)
+            if (!tarjeta.Success)
             {
-                ViewBag.Error = ticket.Message;
+                ViewBag.Error = tarjeta.Message;
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(ticket.Data);
+            return View(tarjeta.Data);
         }
 
-        // POST: Ticket/Delete/5
+        // POST: Tarjeta/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
-                var resultado = await _ticketService.DeleteAsync(id);
+                var resultado = await _tarjetaService.DeleteAsync(id);
 
                 if (!resultado.Success)
                 {
