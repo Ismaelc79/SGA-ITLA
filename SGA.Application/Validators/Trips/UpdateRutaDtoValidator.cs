@@ -18,6 +18,12 @@ namespace SGA.Application.Validators.Trips
                 .MaximumLength(ValidationConstants.LongitudTextoCorta)
                     .WithMessage(ValidationMessages.LongitudMaxima("El nombre de la ruta", ValidationConstants.LongitudTextoCorta));
 
+            RuleFor(x => x.Descripcion)
+                .NotEmpty()
+                    .WithMessage(ValidationMessages.Requerido("La descripción de la ruta"))
+                .MaximumLength(ValidationConstants.LongitudTextoLarga)
+                    .WithMessage(ValidationMessages.LongitudMaxima("La descripción de la ruta", ValidationConstants.LongitudTextoLarga));
+
             RuleFor(x => x.EstadoRuta)
                 .NotEqual(Domain.Enums.EstadoRuta.Ninguno)
                     .WithMessage(ValidationMessages.EnumRequerido("estado de la ruta"))

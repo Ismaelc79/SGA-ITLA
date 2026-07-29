@@ -5,6 +5,7 @@ namespace SGA.Application.DTOs.Bus
 {
     public class UpdateBusDto
     {
+        public int Id { get; set; }
         public int ConductorId { get; set; }
         public int Capacidad { get; set; }
         public string Marca { get; set; }

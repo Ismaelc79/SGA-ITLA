@@ -1,4 +1,4 @@
-namespace SGA.Web.App.Models
+﻿namespace SGA.Web.App.Models
 {
     public class ErrorViewModel
     {

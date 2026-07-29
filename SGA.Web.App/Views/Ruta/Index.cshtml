@@ -1,11 +1,11 @@
-@using SGA.Application.DTOs.Bus
-@model IEnumerable<BusDto>
+﻿@using SGA.Application.DTOs.Ruta
+@model IEnumerable<RutaDto>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Autobuses</h1>
+<h1>Rutas</h1>
 
 @if (TempData["Mensaje"] != null)
 {
@@ -18,7 +18,7 @@
 }
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
 </p>
 @if (Model != null)
 {
@@ -26,22 +26,22 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ConductorId)
+                    @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Placa)
+                    @Html.DisplayNameFor(model => model.Nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Marca)
+                    @Html.DisplayNameFor(model => model.Descripcion)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Modelo)
+                    @Html.DisplayNameFor(model => model.EstadoRuta)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Capacidad)
+                    @Html.DisplayNameFor(model => model.RutaOrigen)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.EstadoBus)
+                    @Html.DisplayNameFor(model => model.RutaDestino)
                 </th>
                 <th></th>
             </tr>
@@ -51,22 +51,22 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(model => item.ConductorId)
+                        @Html.DisplayFor(model => item.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Placa)
+                        @Html.DisplayFor(model => item.Nombre)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Marca)
+                        @Html.DisplayFor(model => item.Descripcion)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Modelo)
+                        @Html.DisplayFor(model => item.EstadoRuta)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.Capacidad)
+                        @Html.DisplayFor(model => item.RutaOrigen)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.EstadoBus)
+                        @Html.DisplayFor(model => item.RutaDestino)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>

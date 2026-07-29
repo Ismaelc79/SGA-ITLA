@@ -1,104 +1,189 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SGA.Application.DTOs.Bus;
 using SGA.Application.Interfaces.Trip;
-using SGA.Web.App.Models;
-
+using SGA.Domain.Enums;
 
 namespace SGA.Web.App.Controllers
 {
     public class BusController : Controller
     {
         private readonly IBusService _busService;
+
         public BusController(IBusService busService)
         {
             _busService = busService;
         }
 
-
-        // GET: BusController
-        public async Task<IActionResult> Index()
+        // GET: Bus
+        public async Task<IActionResult> Index(string? placa)
         {
             var buses = await _busService.GetAllAsync();
+
             if (!buses.Success)
             {
-                ViewBag.Message = buses.Message;
-                return View();
+                ViewBag.Error = buses.Message;
+                return View(new List<BusDto>());
             }
 
-            var viewModel = buses.Data.Select(b => new BusViewModel
+            IEnumerable<BusDto> resultado = buses.Data!;
+
+            if (!string.IsNullOrWhiteSpace(placa))
             {
-                Id = b.Id,
-                ConductorId = b.ConductorId,
-                Placa = b.Placa,
-                Marca = b.Marca,
-                Modelo = b.Modelo,
-                Capacidad = b.Capacidad,
-                EstadoBus = b.EstadoBus
-            });
+                resultado = resultado.Where(b =>
+                    b.Placa != null &&
+                    b.Placa.Contains(placa, StringComparison.OrdinalIgnoreCase));
+            }
 
-            return View(viewModel);
+            ViewBag.Placa = placa;
+
+            return View(resultado.ToList());
         }
 
-        // GET: BusController/Details/5
-        public ActionResult Details(int id)
+        // GET: Bus/Details/5
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var bus = await _busService.GetByIdAsync(id);
+
+            if (!bus.Success)
+            {
+                ViewBag.Error = bus.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(bus.Data);
         }
 
-        // GET: BusController/Create
-        public ActionResult Create()
+        // GET: Bus/Create
+        public IActionResult Create()
         {
-            return View();
+            return View(new CreateBusDto());
         }
 
-        // POST: BusController/Create
+        // POST: Bus/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateBusDto bus)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(bus);
+                }
+
+                var resultado = await _busService.CreateAsync(bus);
+
+                if (!resultado.Success)
+                {
+                    ViewBag.Error = resultado.Message;
+                    return View(bus);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(bus);
             }
         }
 
-        // GET: BusController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Bus/Edit/5
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var bus = await _busService.GetByIdAsync(id);
+
+            if (!bus.Success)
+            {
+                ViewBag.Error = bus.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
+            var dto = bus.Data!;
+
+            var editar = new UpdateBusDto
+            {
+                ConductorId = dto.ConductorId,
+                Placa = dto.Placa,
+                Marca = dto.Marca,
+                Modelo = dto.Modelo,
+                Capacidad = dto.Capacidad,
+                EstadoBus = dto.EstadoBus
+            };
+
+            ViewBag.Estados = Enum.GetValues(typeof(EstadoBus))
+              .Cast<EstadoBus>()
+              .Select(e => new SelectListItem
+              {
+                  Value = e.ToString(),
+                  Text = e.ToString()
+              });
+
+            ViewBag.Id = id;
+
+            return View(editar);
         }
 
-        // POST: BusController/Edit/5
+        // POST: Bus/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, UpdateBusDto bus)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Id = id;
+                    return View(bus);
+                }
+
+                var resultado = await _busService.UpdateAsync(id, bus);
+
+                if (!resultado.Success)
+                {
+                    ViewBag.Error = resultado.Message;
+                    ViewBag.Id = id;
+                    return View(bus);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ViewBag.Id = id;
+                return View(bus);
             }
         }
 
-        // GET: BusController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Bus/Delete/5
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var bus = await _busService.GetByIdAsync(id);
+
+            if (!bus.Success)
+            {
+                ViewBag.Error = bus.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(bus.Data);
         }
 
-        // POST: BusController/Delete/5
+        // POST: Bus/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
+                var resultado = await _busService.DeleteAsync(id);
+
+                if (!resultado.Success)
+                {
+                    ViewBag.Error = resultado.Message;
+                    return RedirectToAction(nameof(Index));
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
