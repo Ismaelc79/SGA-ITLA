@@ -16,4 +16,11 @@
     <ProjectReference Include="..\SGA.Persistence\SGA.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\Authorization\" />
+    <Folder Include="Validators\User\" />
+    <Folder Include="Validators\Role\" />
+    <Folder Include="Validators\Notification\" />
+  </ItemGroup>
+
 </Project>
