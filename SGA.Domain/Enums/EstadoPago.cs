@@ -3,9 +3,11 @@ namespace SGA.Domain.Enums
 {
     public enum EstadoPago
     {
-        Efectivo = 1,
-        Tarjeta = 2,
-        Transferencia = 3,
-        TarjetaRecargable = 4
+        Ninguno = 0,
+        Pendiente = 1,
+        Procesando = 2,
+        Completado = 3,
+        Rechazado = 4,
+        Cancelado = 5
     }
 }

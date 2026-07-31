@@ -1,0 +1,68 @@
+﻿@using SGA.Application.DTOs.Ticket
+@model CreateTicketDto
+
+@{
+    ViewData["Title"] = "Crear Ticket";
+}
+
+<h1>Crear Ticket</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="EstudianteId" class="control-label"></label>
+                <input asp-for="EstudianteId" class="form-control" />
+                <span asp-validation-for="EstudianteId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="RutaId" class="control-label"></label>
+                <input asp-for="RutaId" class="form-control"/>
+                <span asp-validation-for="RutaId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ParadaId" class="control-label"></label>
+                <input asp-for="ParadaId" class="form-control" />
+                <span asp-validation-for="ParadaId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="PagoId" class="control-label"></label>
+                <input asp-for="PagoId" class="form-control" />
+                <span asp-validation-for="PagoId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="EstadoTicket" class="control-label"></label>
+                <select asp-for="EstadoTicket" class="form-control" asp-items="@(ViewBag.Estados as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)"></select>
+                <span asp-validation-for="EstadoTicket" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input asp-for="FechaInicio" class="form-control" />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FechaCierre" class="control-label"></label>
+                <input asp-for="FechaCierre" class="form-control" />
+                <span asp-validation-for="FechaCierre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

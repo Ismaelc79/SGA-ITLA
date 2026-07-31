@@ -1,0 +1,49 @@
+﻿@using SGA.Application.DTOs.Horario
+@using SGA.Domain.Enums
+@model CreateHorarioDto
+
+@{
+    ViewData["Title"] = "Crear Horario";
+}
+
+<h1>Crear Horario</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RutaId" class="control-label"></label>
+                <input asp-for="RutaId" class="form-control" />
+                <span asp-validation-for="RutaId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DiasOperacion" class="control-label"></label>
+                <select asp-for="DiasOperacion" class="form-control" asp-items="@(ViewBag.DiasOperacion as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)"></select>
+                <span asp-validation-for="DiasOperacion" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="HoraInicio" class="control-label"></label>
+                <input asp-for="HoraInicio" class="form-control" />
+                <span asp-validation-for="HoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="HoraFin" class="control-label"></label>
+                <input asp-for="HoraFin" class="form-control" />
+                <span asp-validation-for="HoraFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

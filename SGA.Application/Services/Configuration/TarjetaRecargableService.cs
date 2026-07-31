@@ -1,4 +1,5 @@
-﻿using SGA.Application.DTOs.TarjetaRecargable;
+﻿using FluentValidation;
+using SGA.Application.DTOs.TarjetaRecargable;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
 using SGA.Persistence.Interfaces.Autorizations;
@@ -8,9 +9,17 @@ namespace SGA.Application.Services.Configuration
     public class TarjetaRecargableService : ITarjetaRecargableService
     {
         private readonly ITarjetaRecargableRepository _tarjetaRecargableRepository;
-        public  TarjetaRecargableService(ITarjetaRecargableRepository tarjetaRecargableRepository)
+        private readonly IValidator<CreateTarjetaRecargableDto> _createValidator;
+        private readonly IValidator<UpdateTarjetaRecargableDto> _updateValidator;
+
+        public  TarjetaRecargableService(
+            ITarjetaRecargableRepository tarjetaRecargableRepository, 
+            IValidator<CreateTarjetaRecargableDto> createValidator,
+            IValidator<UpdateTarjetaRecargableDto> updateValidator)
         {
-           _tarjetaRecargableRepository = tarjetaRecargableRepository;
+            _tarjetaRecargableRepository = tarjetaRecargableRepository;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task<OperationResult<IEnumerable<TarjetaRecargableDto>>> GetAllAsync()
@@ -46,6 +55,18 @@ namespace SGA.Application.Services.Configuration
 
         public async Task<OperationResult<TarjetaRecargableDto>> CreateAsync(CreateTarjetaRecargableDto dto)
         {
+            var validacion = _createValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<TarjetaRecargableDto>
+                {
+                    Success = false,
+                    Message = "Los datos de la tarjeta no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+            
             var tarjeta = new Domain.Entities.Authorization.TarjetaRecargable
             {
                 EstudianteId = dto.EstudianteId,
@@ -68,6 +89,18 @@ namespace SGA.Application.Services.Configuration
 
         public async Task<OperationResult<TarjetaRecargableDto>> UpdateAsync(int id, UpdateTarjetaRecargableDto dto)
         {
+            var validacion = _updateValidator.Validate(dto);
+
+            if (!validacion.IsValid)
+            {
+                return new OperationResult<TarjetaRecargableDto>
+                {
+                    Success = false,
+                    Message = "Los datos de la tarjeta no son válidos",
+                    Errors = validacion.Errors.Select(e => e.ErrorMessage).ToList()
+                };
+            }
+
             var tarjetaExistente = await _tarjetaRecargableRepository.GetByIdAsync(id);
 
             if(tarjetaExistente == null)
@@ -80,7 +113,7 @@ namespace SGA.Application.Services.Configuration
                 };
             }
 
-            tarjetaExistente.Id  = dto.Id;
+            tarjetaExistente.Id = dto.Id;
             tarjetaExistente.EstudianteId = dto.EstudianteId;
             tarjetaExistente.PagoId = dto.PagoId;
             tarjetaExistente.MontoTarjeta = dto.MontoTarjeta;

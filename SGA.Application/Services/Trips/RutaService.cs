@@ -154,6 +154,7 @@ namespace SGA.Application.Services.Trips
 
             rutaExistente.Id = dto.Id;
             rutaExistente.Nombre = dto.Nombre;
+            rutaExistente.Descripcion = dto.Descripcion;
             rutaExistente.RutaOrigen = dto.RutaOrigen;
             rutaExistente.RutaDestino = dto.RutaDestino;
             rutaExistente.EstadoRuta = dto.EstadoRuta;
@@ -209,6 +210,7 @@ namespace SGA.Application.Services.Trips
             {
                 Id = ruta.Id,
                 Nombre = ruta.Nombre,
+                Descripcion = ruta.Descripcion,
                 EstadoRuta = ruta.EstadoRuta,
                 RutaOrigen = ruta.RutaOrigen,
                 RutaDestino = ruta.RutaDestino

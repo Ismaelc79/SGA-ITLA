@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Entities.Trip;
 using SGA.Domain.Enums;
 
 namespace SGA.Domain.Entities.Users
@@ -8,6 +9,7 @@ namespace SGA.Domain.Entities.Users
         public int UsuarioId { get; set; }
         public string Nombre { get; set; }
         public string Licencia { get; set; }
+        public ICollection<Bus> Buses { get; set; } = new List<Bus>();
         
     }
 }

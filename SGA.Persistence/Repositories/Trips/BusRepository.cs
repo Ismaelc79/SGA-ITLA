@@ -14,16 +14,34 @@ namespace SGA.Persistence.Repositories.Trips
             
         }
 
+        public override async Task<List<Bus>> GetAllAsync()
+        {
+            return await _dbSet
+                .Include(x => x.Conductor)
+                .ToListAsync();
+        }
+
+        public override async Task<Bus?> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .Include(x => x.Conductor)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+        }
+
         public async Task<IEnumerable<Bus>> GetByActivosAsync()
         {
             return await _dbSet
+                .Include(x =>x.Conductor)
                 .Where(x => x.EstadoBus == EstadoBus.Disponible)
                 .ToListAsync();
         }
 
         public async Task<Bus?> GetByPlacaAsync(string placa)
         {
-            return await _dbSet.FirstOrDefaultAsync(x=> x.Placa == placa);
+            return await _dbSet
+                .Include(x => x.Conductor)
+                .FirstOrDefaultAsync(x=> x.Placa == placa);
         }
     }
 }

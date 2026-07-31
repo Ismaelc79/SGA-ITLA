@@ -10,6 +10,8 @@ namespace SGA.Application.Validators.Trips
         public BusStatusChangeDtoValidator()
         {
             RuleFor(x => x.EstadoBus)
+                .NotEqual(Domain.Enums.EstadoBus.Ninguno)
+                    .WithMessage(ValidationMessages.EnumRequerido("estado del autobús"))
                 .IsInEnum()
                     .WithMessage(ValidationMessages.EnumInvalido("El nuevo estado del autobús"));
 

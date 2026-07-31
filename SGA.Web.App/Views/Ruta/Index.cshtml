@@ -1,0 +1,80 @@
+﻿@using SGA.Application.DTOs.Ruta
+@model IEnumerable<RutaDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Rutas</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+</p>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstadoRuta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaOrigen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaDestino)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.EstadoRuta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RutaOrigen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RutaDestino)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

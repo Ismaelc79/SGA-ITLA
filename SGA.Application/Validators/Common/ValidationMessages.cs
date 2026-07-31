@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore.Update.Internal;
+
 namespace SGA.Application.Validators.Common
 {
     public static class ValidationMessages
@@ -19,5 +21,7 @@ namespace SGA.Application.Validators.Common
         public static string EnumInvalido(string campo)
             => $"{campo} contiene un valor no reconocido por el sistema.";
 
+        public static string EnumRequerido(string campo)
+            => $"Debe seleccionar un estado válido para {campo}";
     }
 }

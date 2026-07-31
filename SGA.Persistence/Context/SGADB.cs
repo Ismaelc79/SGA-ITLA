@@ -4,6 +4,7 @@ using SGA.Domain.Entities.Configuration;
 using SGA.Domain.Entities.Users;
 using SGA.Domain.Entities.Trip;
 using SGA.Domain.Base;
+using SGA.Domain.Notifications;
 
 namespace SGA.Persistence.Context
 {
@@ -36,27 +37,27 @@ namespace SGA.Persistence.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Autorizacion>().ToTable("Autorizacion");
-            modelBuilder.Entity<Autorizacion>().ToTable("Pago");
-            modelBuilder.Entity<Autorizacion>().ToTable("RegistroAcceso");
-            modelBuilder.Entity<Autorizacion>().ToTable("TarjetaRecargable");
-            modelBuilder.Entity<Autorizacion>().ToTable("Ticket");
+            modelBuilder.Entity<Pago>().ToTable("Pago");
+            modelBuilder.Entity<RegistroAcceso>().ToTable("RegistroAcceso");
+            modelBuilder.Entity<TarjetaRecargable>().ToTable("TarjetaRecargable");
+            modelBuilder.Entity<Ticket>().ToTable("Ticket");
 
-            modelBuilder.Entity<Autorizacion>().ToTable("Bus");
-            modelBuilder.Entity<Autorizacion>().ToTable("Horario");
-            modelBuilder.Entity<Autorizacion>().ToTable("Parada");
-            modelBuilder.Entity<Autorizacion>().ToTable("Ruta");
-            modelBuilder.Entity<Autorizacion>().ToTable("Incidencia");
-            modelBuilder.Entity<Autorizacion>().ToTable("Viaje");
+            modelBuilder.Entity<Bus>().ToTable("Bus");
+            modelBuilder.Entity<Horario>().ToTable("Horario");
+            modelBuilder.Entity<Parada>().ToTable("Parada");
+            modelBuilder.Entity<Ruta>().ToTable("Ruta");
+            modelBuilder.Entity<Incidencia>().ToTable("Incidencia");
+            modelBuilder.Entity<Viaje>().ToTable("Viaje");
 
-            modelBuilder.Entity<Autorizacion>().ToTable("Conductor");
-            modelBuilder.Entity<Autorizacion>().ToTable("Empleadp");
-            modelBuilder.Entity<Autorizacion>().ToTable("Estudiante");
-            modelBuilder.Entity<Autorizacion>().ToTable("Rol");
-            modelBuilder.Entity<Autorizacion>().ToTable("Usuario");
-            modelBuilder.Entity<Autorizacion>().ToTable("Notificaciones");
+            modelBuilder.Entity<Conductor>().ToTable("Conductor");
+            modelBuilder.Entity<Empleado>().ToTable("Empleadp");
+            modelBuilder.Entity<Estudiante>().ToTable("Estudiante");
+            modelBuilder.Entity<Rol>().ToTable("Rol");
+            modelBuilder.Entity<Usuario>().ToTable("Usuario");
+            modelBuilder.Entity<Notificaciones>().ToTable("Notificaciones");
 
             modelBuilder.Entity<Autorizacion>()
-                .Property(x => x.Estado)
+                .Property(x => x.EstadoAutorizacion)
                 .HasConversion<string>();
 
             modelBuilder.Entity<Pago>(entity =>
@@ -97,6 +98,11 @@ namespace SGA.Persistence.Context
                 entity.Property(x => x.Placa)
                 .HasMaxLength(50)
                 .IsRequired();
+
+                entity.HasOne(b => b.Conductor)
+                .WithMany(c => c.Buses)
+                .HasForeignKey(b => b.ConductorId)
+                .OnDelete(DeleteBehavior.Restrict);
             }); 
 
             modelBuilder.Entity<Ruta>()

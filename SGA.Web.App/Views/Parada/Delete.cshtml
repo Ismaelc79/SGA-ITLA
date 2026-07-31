@@ -1,0 +1,44 @@
+﻿@using SGA.Application.DTOs.Parada
+@model ParadaDto
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+<h1>Eliminar Parada</h1>
+
+<h3 class="text-danger">¿Está seguro que desea eliminar esta parada?</h3>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Id)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.RutaId)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.RutaId)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nombre)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nombre)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ubicacion)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Ubicacion)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.OrdenParada)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.OrdenParada)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Estado)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Estado)</dd>
+    </dl>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

@@ -14,6 +14,8 @@ namespace SGA.Application.Validators.Trips
                     .WithMessage(ValidationMessages.MayorACero("La ruta asignada"));
 
             RuleFor(x => x.DiasOperacion)
+                .Must(dias => dias != DiasOperacion.Ninguno)
+                    .WithMessage("Debe seleccionar al menos un día de operación")
                 .Must(dias =>
                 {
                     var todosLosDias =
@@ -22,7 +24,7 @@ namespace SGA.Application.Validators.Trips
                     DiasOperacion.Miercoles |
                     DiasOperacion.Jueves |
                     DiasOperacion.Viernes |
-                    DiasOperacion.Sabados;
+                    DiasOperacion.Sabado;
                     return (dias & ~todosLosDias) == 0;
                 })
                     .WithMessage("Los días seleccionados no son válidos");
@@ -37,7 +39,7 @@ namespace SGA.Application.Validators.Trips
 
             RuleFor(x => x.HoraFin)
                 .GreaterThan(x => x.HoraInicio)
-                    .WithMessage("La hora de finalización debe ser mayor que la hora de inicio");
+                    .WithMessage("La hora de finalización debe ser posterior a la hora de inicio");
 
         }
     }

@@ -37,7 +37,7 @@ namespace SGA.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Estado")
+                    b.Property<string>("EstadoAutorizacion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -62,7 +62,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notificaciones", (string)null);
+                    b.ToTable("Autorizacion", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Authorization.Pago", b =>
@@ -106,7 +106,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pagos");
+                    b.ToTable("Pago", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Authorization.RegistroAcceso", b =>
@@ -151,7 +151,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RegistrosAccesos");
+                    b.ToTable("RegistroAcceso", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Authorization.TarjetaRecargable", b =>
@@ -197,7 +197,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TarjetasRecargables");
+                    b.ToTable("TarjetaRecargable", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Authorization.Ticket", b =>
@@ -249,7 +249,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Ticket", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Configuration.Horario", b =>
@@ -288,7 +288,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Horarios");
+                    b.ToTable("Horario", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Configuration.Parada", b =>
@@ -333,7 +333,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Paradas");
+                    b.ToTable("Parada", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Configuration.Ruta", b =>
@@ -382,7 +382,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rutas");
+                    b.ToTable("Ruta", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Trip.Bus", b =>
@@ -431,7 +431,9 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buses");
+                    b.HasIndex("ConductorId");
+
+                    b.ToTable("Bus", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Trip.Incidencia", b =>
@@ -475,7 +477,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Incidencia");
+                    b.ToTable("Incidencia", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Trip.Viaje", b =>
@@ -526,7 +528,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Viaje");
+                    b.ToTable("Viaje", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Conductor", b =>
@@ -564,7 +566,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conductores");
+                    b.ToTable("Conductor", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Empleado", b =>
@@ -609,7 +611,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Empleados");
+                    b.ToTable("Empleadp", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Estudiante", b =>
@@ -654,7 +656,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estudiantes");
+                    b.ToTable("Estudiante", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Rol", b =>
@@ -687,7 +689,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Rol", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Usuario", b =>
@@ -740,7 +742,61 @@ namespace SGA.Persistence.Migrations
 
                     b.HasIndex("RolId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuario", (string)null);
+                });
+
+            modelBuilder.Entity("SGA.Domain.Notifications.Notificaciones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaHora")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoNotificacion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notificaciones", (string)null);
+                });
+
+            modelBuilder.Entity("SGA.Domain.Entities.Trip.Bus", b =>
+                {
+                    b.HasOne("SGA.Domain.Entities.Users.Conductor", "Conductor")
+                        .WithMany("Buses")
+                        .HasForeignKey("ConductorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Conductor");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Usuario", b =>
@@ -752,6 +808,11 @@ namespace SGA.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("SGA.Domain.Entities.Users.Conductor", b =>
+                {
+                    b.Navigation("Buses");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Rol", b =>

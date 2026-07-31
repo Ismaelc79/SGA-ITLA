@@ -1,0 +1,58 @@
+﻿@using SGA.Application.DTOs.TarjetaRecargable
+@model CreateTarjetaRecargableDto
+
+@{
+    ViewData["Title"] = "Crear Nueva";
+}
+
+<h1>Crear Tarjeta Recargable</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="EstudianteId" class="control-label"></label>
+                <input asp-for="EstudianteId" class="form-control" />
+                <span asp-validation-for="EstudianteId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="PagoId" class="control-label"></label>
+                <input asp-for="PagoId" class="form-control" />
+                <span asp-validation-for="PagoId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="MontoTarjeta" class="control-label"></label>
+                <input asp-for="MontoTarjeta" class="form-control" />
+                <span asp-validation-for="MontoTarjeta" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="EstadoTarjeta" class="control-label"></label>
+                <select asp-for="EstadoTarjeta" class="form-control" asp-items="@(ViewBag.Estados as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)"></select>
+                <span asp-validation-for="EstadoTarjeta" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FechaVigenteInicio" class="control-label"></label>
+                <input asp-for="FechaVigenteInicio" class="form-control" />
+                <span asp-validation-for="FechaVigenteInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FechaVigenteFin" class="control-label"></label>
+                <input asp-for="FechaVigenteFin" class="form-control" />
+                <span asp-validation-for="FechaVigenteFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

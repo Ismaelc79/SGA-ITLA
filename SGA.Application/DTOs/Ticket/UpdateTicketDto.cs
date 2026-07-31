@@ -6,7 +6,7 @@ namespace SGA.Application.DTOs.Ticket
     public class UpdateTicketDto
     {
         public int Id { get; set; }
-        public int UsuarioId { get; set; }
+        public int EstudianteId { get; set; }
         public int RutaId { get; set; }
         public int ParadaId { get; set; }
         public int PagoId { get; set; }
