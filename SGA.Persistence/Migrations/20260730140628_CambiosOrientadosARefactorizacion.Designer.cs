@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SGA.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SGA.Persistence.Context;
 namespace SGA.Persistence.Migrations
 {
     [DbContext(typeof(SGADB))]
-    partial class SGADBModelSnapshot : ModelSnapshot
+    [Migration("20260730140628_CambiosOrientadosARefactorizacion")]
+    partial class CambiosOrientadosARefactorizacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -431,8 +434,6 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConductorId");
-
                     b.ToTable("Bus", (string)null);
                 });
 
@@ -788,17 +789,6 @@ namespace SGA.Persistence.Migrations
                     b.ToTable("Notificaciones", (string)null);
                 });
 
-            modelBuilder.Entity("SGA.Domain.Entities.Trip.Bus", b =>
-                {
-                    b.HasOne("SGA.Domain.Entities.Users.Conductor", "Conductor")
-                        .WithMany("Buses")
-                        .HasForeignKey("ConductorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Conductor");
-                });
-
             modelBuilder.Entity("SGA.Domain.Entities.Users.Usuario", b =>
                 {
                     b.HasOne("SGA.Domain.Entities.Users.Rol", "Rol")
@@ -808,11 +798,6 @@ namespace SGA.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Rol");
-                });
-
-            modelBuilder.Entity("SGA.Domain.Entities.Users.Conductor", b =>
-                {
-                    b.Navigation("Buses");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Rol", b =>

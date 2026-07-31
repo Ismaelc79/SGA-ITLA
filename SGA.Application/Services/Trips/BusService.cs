@@ -5,23 +5,27 @@ using SGA.Application.Interfaces.Trip;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces.Trips;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Trips
 {
     public class BusService : IBusService
     {
         private readonly IBusRepository _busRepository;
+        private readonly IConductorRepository _conductorRepository;
         private readonly IValidator<CreateBusDto> _createValidator;
         private readonly IValidator<UpdateBusDto> _updateValidator;
         private readonly IValidator<BusStatusChangeDto>  _statusChangeValidator; 
 
         public BusService(
             IBusRepository busRepository, 
+            IConductorRepository conductorRepository,
             IValidator<CreateBusDto> createValidator, 
             IValidator<UpdateBusDto> updateValidator, 
             IValidator<BusStatusChangeDto> statusChangeValidator)
         {
             _busRepository = busRepository;
+            _conductorRepository = conductorRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
             _statusChangeValidator = statusChangeValidator;
@@ -111,6 +115,8 @@ namespace SGA.Application.Services.Trips
 
             await ValidarPlacaUnicaAsync(dto.Placa);
 
+            await ValidarConductorExistente(dto.ConductorId);
+
             var bus = new Domain.Entities.Trip.Bus
             {
                 ConductorId = dto.ConductorId,
@@ -159,6 +165,7 @@ namespace SGA.Application.Services.Trips
             }
 
             await ValidarPlacaUnicaAsync(dto.Placa);
+            await ValidarConductorExistente(dto.ConductorId);
 
             busExistente.Placa = dto.Placa;
             busExistente.Capacidad = dto.Capacidad;
@@ -245,6 +252,16 @@ namespace SGA.Application.Services.Trips
         }
 
 
+        private async Task ValidarConductorExistente(int conductorId)
+        {
+            var conductor = await _conductorRepository.GetByIdAsync(conductorId);
+
+            if(conductor == null)
+            {
+                throw new BusinessRuleException($"No existe un conductor con el ID {conductorId}");
+            }
+        }
+
         private async Task ValidarPlacaUnicaAsync(string placa)
         {
             var busExistente = await _busRepository.GetByPlacaAsync(placa);
@@ -268,6 +285,8 @@ namespace SGA.Application.Services.Trips
             return new BusDto
             {
                 Id = bus.Id,
+                ConductorId = bus.ConductorId,
+                ConductorNombre = bus.Conductor?.Nombre,
                 Placa = bus.Placa,
                 Marca = bus.Marca,
                 Modelo = bus.Modelo,

@@ -10,8 +10,8 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ConductorId)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.ConductorId)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ConductorNombre)</dt>
+        <dd class="col-sm-10">@(Model.ConductorNombre ?? $"ID {Model.ConductorId}")</dd>
 
         <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Placa)</dt>
         <dd class="col-sm-10">@Html.DisplayFor(model => model.Placa)</dd>

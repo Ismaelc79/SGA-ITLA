@@ -80,7 +80,7 @@ namespace SGA.Application.Services.Authorization
                 Tipo = dto.Tipo,
                 FechaInicio = dto.FechaInicio,
                 FechaCierre = dto.FechaCierre,
-                Estado = EstadoAutorizacion.Pendiente
+                EstadoAutorizacion = EstadoAutorizacion.Pendiente
             };
 
             await _autorizacionRepository.AddAsync(autorizacion);
@@ -184,17 +184,17 @@ namespace SGA.Application.Services.Authorization
                 };
             }
 
-            if (autorizacion.Estado == dto.Estado)
+            if (autorizacion.EstadoAutorizacion == dto.Estado)
             {
                 return new OperationResult<AutorizacionDto>
                 {
                     Success = false,
-                    Message = $"La autorización ya se encuentra en el estado '{autorizacion.Estado}'.",
+                    Message = $"La autorización ya se encuentra en el estado '{autorizacion.EstadoAutorizacion}'.",
                     Errors = new List<string> { "El estado indicado es igual al estado actual." }
                 };
             }
 
-            autorizacion.Estado = dto.Estado;
+            autorizacion.EstadoAutorizacion = dto.Estado;
 
             await _autorizacionRepository.UpdateAsync(autorizacion);
 
@@ -213,7 +213,7 @@ namespace SGA.Application.Services.Authorization
                 Id = autorizacion.Id,
                 UsuarioId = autorizacion.UsuarioId,
                 Tipo = autorizacion.Tipo,
-                Estado = autorizacion.Estado,
+                EstadoAutorizacion = autorizacion.EstadoAutorizacion,
                 FechaInicio = autorizacion.FechaInicio,
                 FechaCierre = autorizacion.FechaCierre
             };
