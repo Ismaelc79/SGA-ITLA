@@ -5,24 +5,41 @@ using SGA.Application.Interfaces.Trips;
 using SGA.Application.Validators.Trips;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
+using SGA.Persistence.Interfaces;
 using SGA.Persistence.Interfaces.Trips;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Trips
 {
     public class ViajeService : IViajeService
     {
         private readonly IViajeRepository _viajeRepository;
+        private readonly IRutaRepository _rutaRepository;
+        private readonly IBusRepository _busRepository;
+        private readonly IConductorRepository _conductorRepository;
+        private readonly IHorarioRepository _horarioRepository;
+        private readonly IIncidenciaRepository _incidenciaRepository;
         private readonly IValidator<CreateViajeDto> _createValidator;
         private readonly IValidator<UpdateViajeDto> _updateValidator;
         private readonly IValidator<ViajeStatusChangeDto> _statusChangeValidator;
 
         public ViajeService(
-            IViajeRepository viajeRepository, 
+            IViajeRepository viajeRepository,
+            IRutaRepository rutaRepository,
+            IBusRepository busRepository,
+            IConductorRepository conductorRepository,
+            IHorarioRepository horarioRepository,
+            IIncidenciaRepository incidenciaRepository,
             IValidator<CreateViajeDto> createViaje,
-            IValidator<UpdateViajeDto> updateViaje, 
+            IValidator<UpdateViajeDto> updateViaje,
             IValidator<ViajeStatusChangeDto> viajeStatusChange)
         {
             _viajeRepository = viajeRepository;
+            _rutaRepository = rutaRepository;
+            _busRepository = busRepository;
+            _conductorRepository = conductorRepository;
+            _horarioRepository = horarioRepository;
+            _incidenciaRepository = incidenciaRepository;
             _createValidator = createViaje;
             _updateValidator = updateViaje;
             _statusChangeValidator = viajeStatusChange;
@@ -96,6 +113,11 @@ namespace SGA.Application.Services.Trips
                 };
             }
             
+            await ValidarRutaExistente(dto.RutaId);
+            await ValidarAutobusExistente(dto.AutobusId);
+            await ValidarConductorExistente(dto.ConductorId);
+            await ValidarHorarioExistente(dto.HorarioId);
+
             var viaje = new Domain.Entities.Trip.Viaje
             {
                 RutaId = dto.RutaId,
@@ -146,6 +168,7 @@ namespace SGA.Application.Services.Trips
             }
 
             ValidarCambioEstado(viajeExistente.EstadoViaje, dto.EstadoViaje);
+            await ValidarIncidenciaExistente(dto.IncidenciaId);
 
             viajeExistente.IncidenciaId = dto.IncidenciaId;
             viajeExistente.EstadoViaje = dto.EstadoViaje;
@@ -224,6 +247,56 @@ namespace SGA.Application.Services.Trips
                 Data = MapToDto(viajeExistente)
             };
 
+        }
+
+        private async Task ValidarRutaExistente(int rutaId)
+        {
+            var ruta = await _rutaRepository.GetByIdAsync(rutaId);
+
+            if (ruta == null)
+            {
+                throw new BusinessRuleException($"No existe una ruta con el ID {rutaId}");
+            }
+        }
+
+        private async Task ValidarAutobusExistente(int autobusId)
+        {
+            var autobus = await _busRepository.GetByIdAsync(autobusId);
+
+            if (autobus == null)
+            {
+                throw new BusinessRuleException($"No existe un autobús con el ID {autobusId}");
+            }
+        }
+
+        private async Task ValidarConductorExistente(int conductorId)
+        {
+            var conductor = await _conductorRepository.GetByIdAsync(conductorId);
+
+            if (conductor == null)
+            {
+                throw new BusinessRuleException($"No existe un conductor con el ID {conductorId}");
+            }
+        }
+
+        private async Task ValidarHorarioExistente(int horarioId)
+        {
+            var horario = await _horarioRepository.GetByIdAsync(horarioId);
+
+            if (horario == null)
+            {
+                throw new BusinessRuleException($"No existe un horario con el ID {horarioId}");
+            }
+        }
+
+        private async Task ValidarIncidenciaExistente(int incidenciaId)
+        {
+            var incidencia = await _incidenciaRepository.GetByIdAsync(incidenciaId);
+
+            if (incidencia == null)
+            {
+                throw new BusinessRuleException($"No existe una incidencia con el ID {incidenciaId}");
+            }
         }
 
         private void ValidarCambioEstado(EstadoViaje actual, EstadoViaje nuevo)

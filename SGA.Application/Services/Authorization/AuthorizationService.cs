@@ -1,26 +1,31 @@
 ﻿using FluentValidation;
 using SGA.Application.DTOs.Authorization;
+using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Authorization;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces.Autorizations;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Authorization
 {
     public class AuthorizationService : IAuthorizationsService
     {
         private readonly IAutorizacionRepository _autorizacionRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IValidator<CreateAutorizacionDto> _createValidator;
         private readonly IValidator<UpdateAutorizacionDto> _updateValidator;
         private readonly IValidator<AutorizacionStatusChangeDto> _statusChangeValidator;
 
         public AuthorizationService(
             IAutorizacionRepository autorizacionRepository,
+            IUsuarioRepository usuarioRepository,
             IValidator<CreateAutorizacionDto> createValidator,
             IValidator<UpdateAutorizacionDto> updateValidator,
             IValidator<AutorizacionStatusChangeDto> statusChangeValidator)
         {
             _autorizacionRepository = autorizacionRepository;
+            _usuarioRepository = usuarioRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
             _statusChangeValidator = statusChangeValidator;
@@ -74,6 +79,8 @@ namespace SGA.Application.Services.Authorization
                 };
             }
 
+            await ValidarUsuarioExistente(dto.UsuarioId);
+
             var autorizacion = new Domain.Entities.Authorization.Autorizacion
             {
                 UsuarioId = dto.UsuarioId,
@@ -118,6 +125,8 @@ namespace SGA.Application.Services.Authorization
                     Errors = new List<string> { "Autorización no encontrada." }
                 };
             }
+
+            await ValidarUsuarioExistente(dto.UsuarioId);
 
             autorizacionExistente.UsuarioId = dto.UsuarioId;
             autorizacionExistente.Tipo = dto.Tipo;
@@ -204,6 +213,16 @@ namespace SGA.Application.Services.Authorization
                 Message = "Estado de la autorización actualizado exitosamente.",
                 Data = MapToDto(autorizacion)
             };
+        }
+
+        private async Task ValidarUsuarioExistente(int usuarioId)
+        {
+            var usuario = await _usuarioRepository.GetByIdAsync(usuarioId);
+
+            if (usuario == null)
+            {
+                throw new BusinessRuleException($"No existe un usuario con el ID {usuarioId}");
+            }
         }
 
         private static AutorizacionDto MapToDto(Domain.Entities.Authorization.Autorizacion autorizacion)

@@ -1,25 +1,30 @@
 ﻿using FluentValidation;
 using SGA.Application.DTOs.Notification;
+using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Notification;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Domain.Notifications;
 using SGA.Persistence.Interfaces.Trips;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Notification
 {
     public class NotificationService : INotificationService
     {
         private readonly INotificacionRepository _notificationRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IValidator<CreateNotificationDto> _createValidator;
         private readonly IValidator<UpdateNotificationDto> _updateValidator;
 
         public NotificationService(
             INotificacionRepository notificationRepository,
+            IUsuarioRepository usuarioRepository,
             IValidator<CreateNotificationDto> createValidator,
             IValidator<UpdateNotificationDto> updateValidator)
         {
             _notificationRepository = notificationRepository;
+            _usuarioRepository = usuarioRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
@@ -72,6 +77,8 @@ namespace SGA.Application.Services.Notification
                 };
             }
 
+            await ValidarUsuarioExistente(dto.UserId);
+
             var notification = new Notificaciones
             {
                 UsuarioId = dto.UserId,
@@ -117,6 +124,8 @@ namespace SGA.Application.Services.Notification
                 };
             }
 
+            await ValidarUsuarioExistente(dto.UserId);
+
             notificationExistente.UsuarioId = dto.UserId;
             notificationExistente.Nombre = dto.Message;
             notificationExistente.Descripcion = dto.Message;
@@ -154,6 +163,16 @@ namespace SGA.Application.Services.Notification
                 Message = "Notificación eliminada exitosamente.",
                 Data = true
             };
+        }
+
+        private async Task ValidarUsuarioExistente(int usuarioId)
+        {
+            var usuario = await _usuarioRepository.GetByIdAsync(usuarioId);
+
+            if (usuario == null)
+            {
+                throw new BusinessRuleException($"No existe un usuario con el ID {usuarioId}");
+            }
         }
 
         private static NotificationDto MapToDto(Notificaciones notification)

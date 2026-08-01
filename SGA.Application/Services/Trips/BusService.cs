@@ -290,7 +290,7 @@ namespace SGA.Application.Services.Trips
 
         private async Task ValidarRutaExistente(int rutaId)
         {
-            var ruta = _rutaRepository.GetByIdAsync(rutaId);
+            var ruta = await _rutaRepository.GetByIdAsync(rutaId);
 
             if(ruta == null)
             {

@@ -1,23 +1,31 @@
 ﻿using FluentValidation;
 using SGA.Application.DTOs.TarjetaRecargable;
+using SGA.Application.Exceptions;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
 using SGA.Persistence.Interfaces.Autorizations;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Configuration
 {
     public class TarjetaRecargableService : ITarjetaRecargableService
     {
         private readonly ITarjetaRecargableRepository _tarjetaRecargableRepository;
+        private readonly IEstudianteRepository _estudianteRepository;
+        private readonly IPagoRepository _pagoRepository;
         private readonly IValidator<CreateTarjetaRecargableDto> _createValidator;
         private readonly IValidator<UpdateTarjetaRecargableDto> _updateValidator;
 
         public  TarjetaRecargableService(
-            ITarjetaRecargableRepository tarjetaRecargableRepository, 
+            ITarjetaRecargableRepository tarjetaRecargableRepository,
+            IEstudianteRepository estudianteRepository,
+            IPagoRepository pagoRepository,
             IValidator<CreateTarjetaRecargableDto> createValidator,
             IValidator<UpdateTarjetaRecargableDto> updateValidator)
         {
             _tarjetaRecargableRepository = tarjetaRecargableRepository;
+            _estudianteRepository = estudianteRepository;
+            _pagoRepository = pagoRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
@@ -67,6 +75,9 @@ namespace SGA.Application.Services.Configuration
                 };
             }
             
+            await ValidarEstudianteExistente(dto.EstudianteId);
+            await ValidarPagoExistente(dto.PagoId);
+
             var tarjeta = new Domain.Entities.Authorization.TarjetaRecargable
             {
                 EstudianteId = dto.EstudianteId,
@@ -113,6 +124,9 @@ namespace SGA.Application.Services.Configuration
                 };
             }
 
+            await ValidarEstudianteExistente(dto.EstudianteId);
+            await ValidarPagoExistente(dto.PagoId);
+
             tarjetaExistente.Id = dto.Id;
             tarjetaExistente.EstudianteId = dto.EstudianteId;
             tarjetaExistente.PagoId = dto.PagoId;
@@ -154,6 +168,26 @@ namespace SGA.Application.Services.Configuration
                 Message = "Tarjeta eliminada exitosamente",
                 Data = true
             };
+        }
+
+        private async Task ValidarEstudianteExistente(int estudianteId)
+        {
+            var estudiante = await _estudianteRepository.GetByIdAsync(estudianteId);
+
+            if (estudiante == null)
+            {
+                throw new BusinessRuleException($"No existe un estudiante con el ID {estudianteId}");
+            }
+        }
+
+        private async Task ValidarPagoExistente(int pagoId)
+        {
+            var pago = await _pagoRepository.GetByIdAsync(pagoId);
+
+            if (pago == null)
+            {
+                throw new BusinessRuleException($"No existe un pago con el ID {pagoId}");
+            }
         }
 
         private TarjetaRecargableDto MapToDto (Domain.Entities.Authorization.TarjetaRecargable tarjetaRecargable)

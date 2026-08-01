@@ -6,23 +6,27 @@ using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces.Autorizations;
+using SGA.Persistence.Interfaces.Users;
 
 namespace SGA.Application.Services.Configuration
 {
     public class PagoService : IPagoService
     {
         private readonly IPagoRepository _pagoRepository;
+        private readonly IEstudianteRepository _estudianteRepository;
         private readonly IValidator<CreatePagoDto> _createValidator;
         private readonly IValidator<UpdatePagoDto> _updateValidator;
         private readonly IValidator<PagoStatusChangeDto> _pagoStatusChangeValidator;
 
         public PagoService(
-            IPagoRepository pagoRepository, 
+            IPagoRepository pagoRepository,
+            IEstudianteRepository estudianteRepository,
             IValidator<CreatePagoDto> createValidator,
-            IValidator<UpdatePagoDto> updateValidator, 
+            IValidator<UpdatePagoDto> updateValidator,
             IValidator<PagoStatusChangeDto> pagoStatusChangeValidator)
         {
             _pagoRepository = pagoRepository;
+            _estudianteRepository = estudianteRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
             _pagoStatusChangeValidator = pagoStatusChangeValidator;
@@ -77,6 +81,8 @@ namespace SGA.Application.Services.Configuration
                 };
             }
 
+            await ValidarEstudianteExistente(dto.EstudianteId);
+
             var pago = new Domain.Entities.Authorization.Pago
             {
                 EstudianteId = dto.EstudianteId,
@@ -125,6 +131,7 @@ namespace SGA.Application.Services.Configuration
             }
 
             ValidarCambioEstado(pagoExistente.EstadoPago, dto.EstadoPago);
+            await ValidarEstudianteExistente(dto.EstudianteId);
 
             pagoExistente.Id = dto.Id;
             pagoExistente.EstudianteId = dto.EstudianteId;
@@ -241,6 +248,16 @@ namespace SGA.Application.Services.Configuration
                 case EstadoPago.Cancelado:
                     throw new BusinessRuleException(
                         "Un pago cancelado no puede cambiar de estado");
+            }
+        }
+
+        private async Task ValidarEstudianteExistente(int estudianteId)
+        {
+            var estudiante = await _estudianteRepository.GetByIdAsync(estudianteId);
+
+            if (estudiante == null)
+            {
+                throw new BusinessRuleException($"No existe un estudiante con el ID {estudianteId}");
             }
         }
 

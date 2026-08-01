@@ -7,8 +7,11 @@ namespace SGA.Application.DTOs.Ticket
     {
         public int Id { get; set; }
         public int EstudianteId { get; set; }
+        public string? EstudianteNombre { get; set; }
         public int RutaId { get; set; }
+        public string? RutaNombre { get; set; }
         public int ParadaId { get; set; }
+        public string? ParadaNombre { get; set; }
         public int PagoId { get; set; }
         public string Tipo { get; set; }
         public EstadoTicket EstadoTicket { get; set; }
