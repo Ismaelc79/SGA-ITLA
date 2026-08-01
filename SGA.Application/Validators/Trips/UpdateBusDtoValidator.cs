@@ -10,9 +10,17 @@ namespace SGA.Application.Validators.Trips
 
         public UpdateBusDtoValidator()
         {
+            RuleFor(x => x.Id)
+                .GreaterThan(0)
+                    .WithMessage(ValidationMessages.Requerido("El identificador del autobús"));
+
             RuleFor(x => x.ConductorId)
                 .GreaterThan(0)
                     .WithMessage(ValidationMessages.Requerido("El conductor asignado"));
+
+            RuleFor(x => x.RutaId)
+                .GreaterThan(0)
+                    .WithMessage(ValidationMessages.Requerido("La ruta asignada"));
 
             RuleFor(x => x.Placa)
                 .NotEmpty()
@@ -25,6 +33,18 @@ namespace SGA.Application.Validators.Trips
                     .WithMessage(ValidationMessages.MayorACero("La capacidad del autobús"))
                 .LessThanOrEqualTo(CapacidadMaximaPermitida)
                     .WithMessage($"La capacidad del autobús no puede exceder {CapacidadMaximaPermitida} pasajeros.");
+            
+            RuleFor(x => x.Marca)
+                .NotEmpty()
+                    .WithMessage(ValidationMessages.Requerido("La marca del autobús"))
+                .MaximumLength(50)
+                    .WithMessage(ValidationMessages.LongitudMaxima("La marca del autobús", 50));
+
+            RuleFor(x => x.Modelo)
+                .NotEmpty()
+                    .WithMessage(ValidationMessages.Requerido("El modelo del autobús"))
+                .MaximumLength(50)
+                    .WithMessage(ValidationMessages.LongitudMaxima("El modelo del autobús", 50));
 
             RuleFor(x => x.EstadoBus)
                 .NotEqual(Domain.Enums.EstadoBus.Ninguno)

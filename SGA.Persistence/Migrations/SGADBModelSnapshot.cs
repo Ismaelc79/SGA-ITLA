@@ -617,7 +617,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Empleadp", (string)null);
+                    b.ToTable("Empleado", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Estudiante", b =>

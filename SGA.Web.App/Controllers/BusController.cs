@@ -106,7 +106,9 @@ namespace SGA.Web.App.Controllers
 
             var editar = new UpdateBusDto
             {
+                Id = dto.Id,
                 ConductorId = dto.ConductorId,
+                RutaId = dto.RutaId,
                 Placa = dto.Placa,
                 Marca = dto.Marca,
                 Modelo = dto.Modelo,

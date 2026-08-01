@@ -50,7 +50,7 @@ namespace SGA.Persistence.Context
             modelBuilder.Entity<Viaje>().ToTable("Viaje");
 
             modelBuilder.Entity<Conductor>().ToTable("Conductor");
-            modelBuilder.Entity<Empleado>().ToTable("Empleadp");
+            modelBuilder.Entity<Empleado>().ToTable("Empleado");
             modelBuilder.Entity<Estudiante>().ToTable("Estudiante");
             modelBuilder.Entity<Rol>().ToTable("Rol");
             modelBuilder.Entity<Usuario>().ToTable("Usuario");
