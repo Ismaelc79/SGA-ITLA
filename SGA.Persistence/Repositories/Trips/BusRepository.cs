@@ -36,6 +36,7 @@ namespace SGA.Persistence.Repositories.Trips
         {
             return await _dbSet
                 .Include(x =>x.Conductor)
+                .Include(x => x.Ruta)
                 .Where(x => x.EstadoBus == EstadoBus.Disponible)
                 .ToListAsync();
         }
@@ -44,6 +45,7 @@ namespace SGA.Persistence.Repositories.Trips
         {
             return await _dbSet
                 .Include(x => x.Conductor)
+                .Include(x => x.Ruta)
                 .FirstOrDefaultAsync(x=> x.Placa == placa);
         }
     }

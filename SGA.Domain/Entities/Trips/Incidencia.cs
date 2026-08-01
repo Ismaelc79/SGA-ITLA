@@ -10,5 +10,6 @@ namespace SGA.Domain.Entities.Trip
         public EstadoIncidencia EstadoIncidencia { get; set; }
         public string Descripcion { get; set; }
         public DateTime FechaReporte { get; set; }
+        public ICollection<Viaje> Viajes { get; set; } = new List<Viaje>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SGA.Domain.Base;
+using SGA.Domain.Entities.Authorization;
 
 namespace SGA.Domain.Entities.Configuration
 {
@@ -10,6 +11,7 @@ namespace SGA.Domain.Entities.Configuration
         public string Ubicacion { get; set; }
         public string OrdenParada { get; set; }
         public string Estado { get; set; }
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
     }
 }

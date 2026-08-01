@@ -56,9 +56,34 @@ namespace SGA.Persistence.Context
             modelBuilder.Entity<Usuario>().ToTable("Usuario");
             modelBuilder.Entity<Notificaciones>().ToTable("Notificaciones");
 
-            modelBuilder.Entity<Autorizacion>()
-                .Property(x => x.EstadoAutorizacion)
+            modelBuilder.Entity<Autorizacion>(entity =>
+            {
+                entity.Property(x => x.EstadoAutorizacion)
                 .HasConversion<string>();
+
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.Autorizaciones)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<RegistroAcceso>(entity =>
+            {
+                entity.HasOne(x => x.Viaje)
+                .WithMany(v => v.RegistrosAcceso)
+                .HasForeignKey(x => x.ViajeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.RegistrosAcceso)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Autorizacion)
+                .WithMany(a => a.RegistrosAcceso)
+                .HasForeignKey(x => x.AutorizacionId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Pago>(entity =>
             {
@@ -70,6 +95,11 @@ namespace SGA.Persistence.Context
 
                 entity.Property(x => x.MontoPago)
                 .HasPrecision(18, 2);
+
+                entity.HasOne(x => x.Estudiante)
+                .WithMany(e => e.Pagos)
+                .HasForeignKey(x => x.EstudianteId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TarjetaRecargable>(entity =>
@@ -80,11 +110,43 @@ namespace SGA.Persistence.Context
                 entity.Property(x => x.MontoTarjeta)
                 .HasPrecision(18, 2);
 
+                entity.HasOne(x => x.Estudiante)
+                .WithMany(e => e.TarjetasRecargables)
+                .HasForeignKey(x => x.EstudianteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Pago)
+                .WithMany(p => p.TarjetasRecargables)
+                .HasForeignKey(x => x.PagoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             });
 
-            modelBuilder.Entity<Ticket>()
-                .Property(x => x.EstadoTicket)
+            modelBuilder.Entity<Ticket>(entity =>
+            {
+                entity.Property(x => x.EstadoTicket)
                 .HasConversion<string>();
+
+                entity.HasOne(x => x.Estudiante)
+                .WithMany(e => e.Tickets)
+                .HasForeignKey(x => x.EstudianteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Ruta)
+                .WithMany(r => r.Tickets)
+                .HasForeignKey(x => x.RutaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Parada)
+                .WithMany(p => p.Tickets)
+                .HasForeignKey(x => x.ParadaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Pago)
+                .WithMany(p => p.Tickets)
+                .HasForeignKey(x => x.PagoId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Horario>(entity =>
             {
@@ -137,14 +199,64 @@ namespace SGA.Persistence.Context
                 .HasConversion<string>();
             });
 
-            modelBuilder.Entity<Viaje>()
-                .Property(x => x.EstadoViaje)
+            modelBuilder.Entity<Viaje>(entity =>
+            {
+                entity.Property(x => x.EstadoViaje)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<Conductor>()
-                .Property(x => x.Licencia)
+                entity.HasOne(x => x.Ruta)
+                .WithMany(r => r.Viajes)
+                .HasForeignKey(x => x.RutaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Autobus)
+                .WithMany(b => b.Viajes)
+                .HasForeignKey(x => x.AutobusId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Conductor)
+                .WithMany(c => c.Viajes)
+                .HasForeignKey(x => x.ConductorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Horario)
+                .WithMany(h => h.Viajes)
+                .HasForeignKey(x => x.HorarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Incidencia)
+                .WithMany(i => i.Viajes)
+                .HasForeignKey(x => x.IncidenciaId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Conductor>(entity =>
+            {
+                entity.Property(x => x.Licencia)
                 .HasMaxLength(30)
                 .IsRequired();
+
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.Conductores)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Empleado>(entity =>
+            {
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.Empleados)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Estudiante>(entity =>
+            {
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.Estudiantes)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Usuario>(entity =>
             {
@@ -162,6 +274,19 @@ namespace SGA.Persistence.Context
                 entity.Property(x => x.Estado)
                 .HasConversion<string>();
 
+                entity.HasOne(x => x.Rol)
+                .WithMany(r => r.Usuarios)
+                .HasForeignKey(x => x.RolId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            modelBuilder.Entity<Notificaciones>(entity =>
+            {
+                entity.HasOne(x => x.Usuario)
+                .WithMany(u => u.Notificaciones)
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

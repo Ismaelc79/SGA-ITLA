@@ -16,6 +16,7 @@ namespace SGA.Domain.Entities.Trip
         public string Placa { get; set; }
         public int Capacidad { get; set; }
         public EstadoBus EstadoBus { get; set; }
+        public ICollection<Viaje> Viajes { get; set; } = new List<Viaje>();
 
     }
 }
