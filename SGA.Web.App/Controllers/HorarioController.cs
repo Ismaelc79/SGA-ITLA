@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SGA.Application.DTOs.Horario;
 using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Enums;
+using SGA.Application.Exceptions;
+
 
 namespace SGA.Web.App.Controllers
 {
@@ -84,9 +86,9 @@ namespace SGA.Web.App.Controllers
                
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(BusinessRuleException ex)
             {
-
+                ViewBag.Error = ex.Message;
                 return View(horario);
             }
         }
@@ -149,8 +151,9 @@ namespace SGA.Web.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(BusinessRuleException ex)
             {
+                ViewBag.Error = ex.Message;
                 ViewBag.Id = id;
                 return View(horario);
             }

@@ -26,7 +26,13 @@
         <thead>
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.ConductorNombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RutaNombre)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Placa)
@@ -51,7 +57,13 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(model => item.Id)
+                    </td>
+                    <td>
                         @Html.DisplayFor(model => item.ConductorNombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.RutaNombre)
                     </td>
                     <td>
                         @Html.DisplayFor(model => item.Placa)

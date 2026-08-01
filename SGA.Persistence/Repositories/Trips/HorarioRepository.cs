@@ -14,6 +14,20 @@ namespace SGA.Persistence.Repositories.Trips
                         
         }
 
+        public override async Task<List<Horario>> GetAllAsync()
+        {
+            return await _dbSet
+                .Include(x => x.Ruta)
+                .ToListAsync();
+        }
+
+        public override async Task<Horario?> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .Include(x => x.Ruta)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Horario?> GetByRutaDiaHoraAsync(int Id, int rutaId, DiasOperacion diasOperacion, TimeOnly HoraInicio)
         {
            return await _dbSet.FirstOrDefaultAsync(h =>

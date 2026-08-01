@@ -9,6 +9,7 @@ namespace SGA.Application.DTOs.Horario
     {
         public int Id { get; set; }
         public int RutaId { get; set; }
+        public string? RutaNombre { get; set; }
         public DiasOperacion DiasOperacion { get; set; }
         public TimeOnly HoraInicio { get; set; }
         public TimeOnly HoraFin { get; set; }

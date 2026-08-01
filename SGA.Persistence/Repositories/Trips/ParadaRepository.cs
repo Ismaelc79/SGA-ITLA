@@ -12,6 +12,20 @@ namespace SGA.Persistence.Repositories.Trips
         {
 
         }
+        public override async Task<List<Parada>> GetAllAsync() 
+        { 
+            return await _dbSet
+                .Include(x => x.Ruta)
+                .ToListAsync();
+        }
+
+        public override async Task<Parada?> GetByIdAsync(int id)
+        {
+            return await _dbSet
+                .Include(x => x.Ruta)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Parada?> GetByNombreAsync(string nombre)
         { 
             return await _dbSet.FirstOrDefaultAsync(x => x.Nombre == nombre);

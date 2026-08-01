@@ -17,11 +17,15 @@
     <div class="col-md-6">
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group mb-3">
                 <label asp-for="ConductorId" class="control-label"></label>
                 <input asp-for="ConductorId" class="form-control" />
                 <span asp-validation-for="ConductorId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="RutaId" class="control-label"></label>
+                <input asp-for="RutaId" class="form-control" />
+                <span asp-validation-for="RutaId" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Placa" class="control-label"></label>

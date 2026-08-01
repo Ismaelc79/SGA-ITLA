@@ -18,13 +18,16 @@ namespace SGA.Persistence.Repositories.Trips
         {
             return await _dbSet
                 .Include(x => x.Conductor)
+                .Include(x => x.Ruta)
                 .ToListAsync();
+       
         }
 
         public override async Task<Bus?> GetByIdAsync(int id)
         {
             return await _dbSet
                 .Include(x => x.Conductor)
+                .Include (x => x.Ruta)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         }

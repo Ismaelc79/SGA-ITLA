@@ -86,10 +86,17 @@ namespace SGA.Persistence.Context
                 .Property(x => x.EstadoTicket)
                 .HasConversion<string>();
 
-           modelBuilder.Entity<Horario>()
-                .Property(x => x.DiasOperacion) 
+            modelBuilder.Entity<Horario>(entity =>
+            {
+                entity.Property(x => x.DiasOperacion)
                 .HasConversion<string>();
 
+                entity.HasOne(b => b.Ruta)
+                .WithMany(c => c.Horarios)
+                .HasForeignKey(b => b.RutaId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+  
             modelBuilder.Entity<Bus>(entity =>
             {
                 entity.Property(x => x.EstadoBus)
@@ -99,15 +106,28 @@ namespace SGA.Persistence.Context
                 .HasMaxLength(50)
                 .IsRequired();
 
-                entity.HasOne(b => b.Conductor)
-                .WithMany(c => c.Buses)
-                .HasForeignKey(b => b.ConductorId)
+                entity.HasOne(x => x.Conductor)
+                .WithMany(b => b.Buses)
+                .HasForeignKey(x => x.ConductorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.Ruta)
+                .WithMany(b => b.Buses)
+                .HasForeignKey(x => x.RutaId)
                 .OnDelete(DeleteBehavior.Restrict);
             }); 
 
             modelBuilder.Entity<Ruta>()
                 .Property(x=> x.EstadoRuta)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<Parada>(entity =>
+            {
+                entity.HasOne(x => x.Ruta)
+                .WithMany(b => b.Paradas)
+                .HasForeignKey(x =>x.RutaId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
 
             modelBuilder.Entity<Incidencia>(entity =>
             {
