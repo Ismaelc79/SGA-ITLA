@@ -8,6 +8,9 @@
   <Folder Name="/SGA.Application/">
     <Project Path="SGA.Application/SGA.Application.csproj" />
   </Folder>
+  <Folder Name="/SGA.Desktop/">
+    <Project Path="WpfApp/WpfApp.csproj" Id="8bcc8edd-da7a-42a5-a297-037b2a46a862" />
+  </Folder>
   <Folder Name="/SGA.Domain/">
     <Project Path="SGA.Domain/SGA.Domain.csproj" />
   </Folder>
@@ -23,5 +26,8 @@
   </Folder>
   <Folder Name="/SGA.Web.Extra/" Id="e76fe2b3-0cbe-9885-063a-b768ad2f574b">
     <Project Path="SGA.Web.App/SGA.Web.App.csproj" Id="c1c027bd-75cc-4103-850a-1c248d4ce656" />
+  </Folder>
+  <Folder Name="/SGA.Web/">
+    <Project Path="WebApp/WebApp.csproj" Id="3bf09d8c-3aed-462a-acdd-ca1c77768d76" />
   </Folder>
 </Solution>

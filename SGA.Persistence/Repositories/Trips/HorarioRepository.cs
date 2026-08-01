@@ -28,10 +28,9 @@ namespace SGA.Persistence.Repositories.Trips
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Horario?> GetByRutaDiaHoraAsync(int Id, int rutaId, DiasOperacion diasOperacion, TimeOnly HoraInicio)
+        public async Task<Horario?> GetByRutaDiaHoraAsync(int rutaId, DiasOperacion diasOperacion, TimeOnly HoraInicio)
         {
            return await _dbSet.FirstOrDefaultAsync(h =>
-           h.Id == Id &&
            h.RutaId == rutaId &&
            h.DiasOperacion == diasOperacion &&
            h.HoraInicio == HoraInicio); 

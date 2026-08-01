@@ -8,7 +8,6 @@ namespace SGA.Persistence.Interfaces
     {
 
         Task<Horario?> GetByRutaDiaHoraAsync(
-                int Id,
                 int rutaId,
                 DiasOperacion diasOperacion,
                 TimeOnly HoraInicio);

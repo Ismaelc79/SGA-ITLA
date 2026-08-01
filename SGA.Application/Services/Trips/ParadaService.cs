@@ -207,6 +207,7 @@ namespace SGA.Application.Services.Configuration
             return new ParadaDto
             {
                 Id = parada.Id,
+                RutaId = parada.RutaId,
                 RutaNombre = parada.Ruta?.Nombre,
                 Nombre = parada.Nombre,
                 Ubicacion = parada.Ubicacion,

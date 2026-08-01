@@ -108,6 +108,7 @@ namespace SGA.Web.App.Controllers
 
             var editar = new UpdateHorarioDto
             {
+                Id = dto.Id,
                 RutaId = dto.RutaId,
                 DiasOperacion = dto.DiasOperacion,
                 HoraInicio = dto.HoraInicio,

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SGA.Api\SGA.Api.csproj" />
+    <ProjectReference Include="..\SGA.Domain\SGA.Domain.csproj" />
+    <ProjectReference Include="..\SGA.Persistence\SGA.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

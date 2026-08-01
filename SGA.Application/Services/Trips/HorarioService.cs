@@ -79,7 +79,6 @@ namespace SGA.Application.Services.Trips
             }
 
             await ValidarHorarioExistente(
-                dto.Id,
                 dto.RutaId,
                 dto.DiasOperacion,
                 dto.HoraInicio
@@ -131,8 +130,15 @@ namespace SGA.Application.Services.Trips
                 };
 
             }
-
+            
             await ValidarRutaExistente(dto.RutaId);
+
+            await ValidarHorarioExistente(
+                dto.RutaId,
+                dto.DiasOperacion,
+                dto.HoraInicio,
+                idExcluir: id
+            );
 
             horarioExistente.RutaId = dto.RutaId;
             horarioExistente.DiasOperacion = dto.DiasOperacion;
@@ -174,14 +180,13 @@ namespace SGA.Application.Services.Trips
         }
 
         private async Task ValidarHorarioExistente(
-            int Id,
             int rutaId,
             DiasOperacion diasOperacion,
             TimeOnly horaInicio,
             int? idExcluir =null) 
         {
             var horarioExistente = await _horarioRepository.GetByRutaDiaHoraAsync(
-                Id, rutaId, diasOperacion, horaInicio);
+                rutaId, diasOperacion, horaInicio);
 
             if (horarioExistente != null && horarioExistente.Id != idExcluir)
             {
