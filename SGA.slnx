@@ -28,6 +28,6 @@
     <Project Path="SGA.Web.App/SGA.Web.App.csproj" Id="c1c027bd-75cc-4103-850a-1c248d4ce656" />
   </Folder>
   <Folder Name="/SGA.Web/">
-    <Project Path="WebApp/WebApp.csproj" Id="3bf09d8c-3aed-462a-acdd-ca1c77768d76" />
+    <Project Path="WebApp/SGA.Web.Application.csproj" Id="3bf09d8c-3aed-462a-acdd-ca1c77768d76" />
   </Folder>
 </Solution>

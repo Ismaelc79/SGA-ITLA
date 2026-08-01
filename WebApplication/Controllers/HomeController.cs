@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebApp.Models;
+using WebApplication.Models;
 
-namespace WebApp.Controllers
+namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public HomeController(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
         public IActionResult Index()
         {
-            var client = _httpClientFactory.CreateClient("SGA.API");
             return View();
         }
 

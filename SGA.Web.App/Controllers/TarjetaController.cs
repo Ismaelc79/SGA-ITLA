@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SGA.Application.DTOs.TarjetaRecargable;
 using SGA.Application.Interfaces.Configuration;
 using SGA.Domain.Enums;
+using SGA.Application.Exceptions;
 
 namespace SGA.Web.App.Controllers
 {
@@ -83,8 +84,9 @@ namespace SGA.Web.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(BusinessRuleException ex)
             {
+                ViewBag.Error = ex.Message;
                 return View(tarjeta);
             }
         }
@@ -150,8 +152,9 @@ namespace SGA.Web.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(BusinessRuleException ex) 
             {
+                ViewBag.Error = ex.Message;
                 ViewBag.Id = id;
                 return View(tarjeta);
             }
