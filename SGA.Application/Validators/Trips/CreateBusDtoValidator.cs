@@ -15,6 +15,10 @@ namespace SGA.Application.Validators.Trips
                 .GreaterThan(0)
                 .WithMessage(ValidationMessages.MayorACero("El conductor asignado"));
 
+            RuleFor(x => x.RutaId) 
+                .GreaterThan(0)
+                .WithMessage(ValidationMessages.MayorACero("La ruta asignada"));
+
             RuleFor(x => x.Marca)
                 .NotEmpty()
                     .WithMessage(ValidationMessages.Requerido("La marca"))

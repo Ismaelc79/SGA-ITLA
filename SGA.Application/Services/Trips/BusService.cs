@@ -13,6 +13,7 @@ namespace SGA.Application.Services.Trips
     {
         private readonly IBusRepository _busRepository;
         private readonly IConductorRepository _conductorRepository;
+        private readonly IRutaRepository _rutaRepository;
         private readonly IValidator<CreateBusDto> _createValidator;
         private readonly IValidator<UpdateBusDto> _updateValidator;
         private readonly IValidator<BusStatusChangeDto>  _statusChangeValidator; 
@@ -20,12 +21,14 @@ namespace SGA.Application.Services.Trips
         public BusService(
             IBusRepository busRepository, 
             IConductorRepository conductorRepository,
+            IRutaRepository rutaRepository,
             IValidator<CreateBusDto> createValidator, 
             IValidator<UpdateBusDto> updateValidator, 
             IValidator<BusStatusChangeDto> statusChangeValidator)
         {
             _busRepository = busRepository;
             _conductorRepository = conductorRepository;
+            _rutaRepository = rutaRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
             _statusChangeValidator = statusChangeValidator;
@@ -116,10 +119,12 @@ namespace SGA.Application.Services.Trips
             await ValidarPlacaUnicaAsync(dto.Placa);
 
             await ValidarConductorExistente(dto.ConductorId);
+            await ValidarRutaExistente(dto.RutaId);
 
             var bus = new Domain.Entities.Trip.Bus
             {
                 ConductorId = dto.ConductorId,
+                RutaId = dto.RutaId,
                 Placa = dto.Placa,
                 Marca = dto.Marca,
                 Modelo = dto.Modelo,
@@ -166,12 +171,15 @@ namespace SGA.Application.Services.Trips
 
             await ValidarPlacaUnicaAsync(dto.Placa);
             await ValidarConductorExistente(dto.ConductorId);
+            await ValidarRutaExistente(dto.RutaId);
 
+            busExistente.Id = dto.Id;
+            busExistente.ConductorId = dto.ConductorId;
+            busExistente.RutaId = dto.RutaId;
             busExistente.Placa = dto.Placa;
             busExistente.Capacidad = dto.Capacidad;
             busExistente.Marca = dto.Marca;
             busExistente.Modelo = dto.Modelo;
-            busExistente.ConductorId = dto.ConductorId;
             busExistente.EstadoBus = dto.EstadoBus;
 
             await _busRepository.UpdateAsync(busExistente);
@@ -237,10 +245,10 @@ namespace SGA.Application.Services.Trips
                     };
             }
 
-            ValidarCambioEstado(bus.EstadoBus, dto.EstadoBus);
+           await ValidarCambioEstado(bus.EstadoBus, dto.EstadoBus);
             bus.EstadoBus = dto.EstadoBus;
 
-            await _busRepository.UpdateAsync(bus);
+           await _busRepository.UpdateAsync(bus);
 
             return new OperationResult<BusDto>
             {
@@ -272,11 +280,21 @@ namespace SGA.Application.Services.Trips
             }
         }
         
-        private void ValidarCambioEstado(EstadoBus actual, EstadoBus nuevo)
+        private async Task ValidarCambioEstado(EstadoBus actual, EstadoBus nuevo)
         {
             if(actual == nuevo)
             {
                 throw new BusinessRuleException($"El bus ya se encuentra en el estado '{actual}'.");    
+            }
+        }
+
+        private async Task ValidarRutaExistente(int rutaId)
+        {
+            var ruta = _rutaRepository.GetByIdAsync(rutaId);
+
+            if(ruta == null)
+            {
+                throw new BusinessRuleException($"No existe una ruta con el ID {rutaId}");
             }
         }
 
@@ -287,6 +305,8 @@ namespace SGA.Application.Services.Trips
                 Id = bus.Id,
                 ConductorId = bus.ConductorId,
                 ConductorNombre = bus.Conductor?.Nombre,
+                RutaId = bus.RutaId,
+                RutaNombre = bus.Ruta?.Nombre,
                 Placa = bus.Placa,
                 Marca = bus.Marca,
                 Modelo = bus.Modelo,

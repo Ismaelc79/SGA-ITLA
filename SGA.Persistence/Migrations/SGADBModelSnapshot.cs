@@ -288,6 +288,8 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RutaId");
+
                     b.ToTable("Horario", (string)null);
                 });
 
@@ -333,6 +335,8 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RutaId");
+
                     b.ToTable("Parada", (string)null);
                 });
 
@@ -368,9 +372,6 @@ namespace SGA.Persistence.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParadaId")
-                        .HasColumnType("int");
 
                     b.Property<string>("RutaDestino")
                         .IsRequired()
@@ -429,9 +430,14 @@ namespace SGA.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("RutaId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConductorId");
+
+                    b.HasIndex("RutaId");
 
                     b.ToTable("Bus", (string)null);
                 });
@@ -611,7 +617,7 @@ namespace SGA.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Empleadp", (string)null);
+                    b.ToTable("Empleado", (string)null);
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Estudiante", b =>
@@ -788,6 +794,28 @@ namespace SGA.Persistence.Migrations
                     b.ToTable("Notificaciones", (string)null);
                 });
 
+            modelBuilder.Entity("SGA.Domain.Entities.Configuration.Horario", b =>
+                {
+                    b.HasOne("SGA.Domain.Entities.Configuration.Ruta", "Ruta")
+                        .WithMany("Horarios")
+                        .HasForeignKey("RutaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ruta");
+                });
+
+            modelBuilder.Entity("SGA.Domain.Entities.Configuration.Parada", b =>
+                {
+                    b.HasOne("SGA.Domain.Entities.Configuration.Ruta", "Ruta")
+                        .WithMany("Paradas")
+                        .HasForeignKey("RutaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ruta");
+                });
+
             modelBuilder.Entity("SGA.Domain.Entities.Trip.Bus", b =>
                 {
                     b.HasOne("SGA.Domain.Entities.Users.Conductor", "Conductor")
@@ -796,7 +824,15 @@ namespace SGA.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("SGA.Domain.Entities.Configuration.Ruta", "Ruta")
+                        .WithMany("Buses")
+                        .HasForeignKey("RutaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Conductor");
+
+                    b.Navigation("Ruta");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Usuario", b =>
@@ -808,6 +844,15 @@ namespace SGA.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("SGA.Domain.Entities.Configuration.Ruta", b =>
+                {
+                    b.Navigation("Buses");
+
+                    b.Navigation("Horarios");
+
+                    b.Navigation("Paradas");
                 });
 
             modelBuilder.Entity("SGA.Domain.Entities.Users.Conductor", b =>

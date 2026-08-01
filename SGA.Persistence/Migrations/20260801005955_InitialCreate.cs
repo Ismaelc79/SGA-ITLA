@@ -12,15 +12,16 @@ namespace SGA.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Buses",
+                name: "Autorizacion",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ConductorId = table.Column<int>(type: "int", nullable: false),
-                    Placa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Capacidad = table.Column<int>(type: "int", nullable: false),
-                    EstadoBus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstadoAutorizacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaCierre = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -28,11 +29,11 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buses", x => x.Id);
+                    table.PrimaryKey("PK_Autorizacion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Conductores",
+                name: "Conductor",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -47,11 +48,11 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conductores", x => x.Id);
+                    table.PrimaryKey("PK_Conductor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Empleados",
+                name: "Empleado",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -68,11 +69,11 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Empleados", x => x.Id);
+                    table.PrimaryKey("PK_Empleado", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Estudiantes",
+                name: "Estudiante",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -89,27 +90,7 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Estudiantes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Horarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RutaId = table.Column<int>(type: "int", nullable: false),
-                    DiasOperacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HoraFin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Horarios", x => x.Id);
+                    table.PrimaryKey("PK_Estudiante", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,7 +99,6 @@ namespace SGA.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ViajeId = table.Column<int>(type: "int", nullable: false),
                     ReporteId = table.Column<int>(type: "int", nullable: false),
                     TipoIncidencia = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstadoIncidencia = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -141,10 +121,10 @@ namespace SGA.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaCierre = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoNotificacion = table.Column<int>(type: "int", nullable: false),
+                    FechaHora = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -156,12 +136,12 @@ namespace SGA.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pagos",
+                name: "Pago",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    EstudianteId = table.Column<int>(type: "int", nullable: false),
                     MontoPago = table.Column<double>(type: "float(18)", precision: 18, scale: 2, nullable: false),
                     MetodoPago = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstadoPago = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -173,32 +153,11 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pagos", x => x.Id);
+                    table.PrimaryKey("PK_Pago", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Paradas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RutaId = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ubicacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParadaOrden = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Paradas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RegistrosAccesos",
+                name: "RegistroAcceso",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -216,11 +175,11 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegistrosAccesos", x => x.Id);
+                    table.PrimaryKey("PK_RegistroAcceso", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Rol",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -234,19 +193,18 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Rol", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rutas",
+                name: "Ruta",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParadaId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstadoRuta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RutaOrigen = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RutaDestino = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -256,16 +214,17 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rutas", x => x.Id);
+                    table.PrimaryKey("PK_Ruta", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TarjetasRecargables",
+                name: "TarjetaRecargable",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EstudianteId = table.Column<int>(type: "int", nullable: false),
+                    PagoId = table.Column<int>(type: "int", nullable: false),
                     MontoTarjeta = table.Column<double>(type: "float(18)", precision: 18, scale: 2, nullable: false),
                     EstadoTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaVigenteInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -277,16 +236,16 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TarjetasRecargables", x => x.Id);
+                    table.PrimaryKey("PK_TarjetaRecargable", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tickets",
+                name: "Ticket",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    EstudianteId = table.Column<int>(type: "int", nullable: false),
                     RutaId = table.Column<int>(type: "int", nullable: false),
                     ParadaId = table.Column<int>(type: "int", nullable: false),
                     PagoId = table.Column<int>(type: "int", nullable: false),
@@ -301,7 +260,7 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.PrimaryKey("PK_Ticket", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,6 +273,7 @@ namespace SGA.Persistence.Migrations
                     AutobusId = table.Column<int>(type: "int", nullable: false),
                     ConductorId = table.Column<int>(type: "int", nullable: false),
                     HorarioId = table.Column<int>(type: "int", nullable: false),
+                    IncidenciaId = table.Column<int>(type: "int", nullable: false),
                     EstadoViaje = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HoraSalidaEstimada = table.Column<DateTime>(type: "datetime2", nullable: true),
                     HoraLlegadaEstimada = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -328,7 +288,7 @@ namespace SGA.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "Usuario",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -346,18 +306,126 @@ namespace SGA.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_Usuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Roles_RolId",
+                        name: "FK_Usuario_Rol_RolId",
                         column: x => x.RolId,
-                        principalTable: "Roles",
+                        principalTable: "Rol",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Bus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConductorId = table.Column<int>(type: "int", nullable: false),
+                    RutaId = table.Column<int>(type: "int", nullable: false),
+                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Placa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Capacidad = table.Column<int>(type: "int", nullable: false),
+                    EstadoBus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bus_Conductor_ConductorId",
+                        column: x => x.ConductorId,
+                        principalTable: "Conductor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Bus_Ruta_RutaId",
+                        column: x => x.RutaId,
+                        principalTable: "Ruta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Horario",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RutaId = table.Column<int>(type: "int", nullable: false),
+                    DiasOperacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HoraInicio = table.Column<TimeOnly>(type: "time", nullable: false),
+                    HoraFin = table.Column<TimeOnly>(type: "time", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Horario", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Horario_Ruta_RutaId",
+                        column: x => x.RutaId,
+                        principalTable: "Ruta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parada",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RutaId = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ubicacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrdenParada = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parada", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Parada_Ruta_RutaId",
+                        column: x => x.RutaId,
+                        principalTable: "Ruta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_RolId",
-                table: "Usuarios",
+                name: "IX_Bus_ConductorId",
+                table: "Bus",
+                column: "ConductorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bus_RutaId",
+                table: "Bus",
+                column: "RutaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Horario_RutaId",
+                table: "Horario",
+                column: "RutaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parada_RutaId",
+                table: "Parada",
+                column: "RutaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_RolId",
+                table: "Usuario",
                 column: "RolId");
         }
 
@@ -365,19 +433,19 @@ namespace SGA.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Buses");
+                name: "Autorizacion");
 
             migrationBuilder.DropTable(
-                name: "Conductores");
+                name: "Bus");
 
             migrationBuilder.DropTable(
-                name: "Empleados");
+                name: "Empleadp");
 
             migrationBuilder.DropTable(
-                name: "Estudiantes");
+                name: "Estudiante");
 
             migrationBuilder.DropTable(
-                name: "Horarios");
+                name: "Horario");
 
             migrationBuilder.DropTable(
                 name: "Incidencia");
@@ -386,31 +454,34 @@ namespace SGA.Persistence.Migrations
                 name: "Notificaciones");
 
             migrationBuilder.DropTable(
-                name: "Pagos");
+                name: "Pago");
 
             migrationBuilder.DropTable(
-                name: "Paradas");
+                name: "Parada");
 
             migrationBuilder.DropTable(
-                name: "RegistrosAccesos");
+                name: "RegistroAcceso");
 
             migrationBuilder.DropTable(
-                name: "Rutas");
+                name: "TarjetaRecargable");
 
             migrationBuilder.DropTable(
-                name: "TarjetasRecargables");
+                name: "Ticket");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
-
-            migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Viaje");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Conductor");
+
+            migrationBuilder.DropTable(
+                name: "Ruta");
+
+            migrationBuilder.DropTable(
+                name: "Rol");
         }
     }
 }

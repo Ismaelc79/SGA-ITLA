@@ -5,21 +5,25 @@ using SGA.Application.Interfaces.Trips;
 using SGA.Domain.Base;
 using SGA.Domain.Enums;
 using SGA.Persistence.Interfaces;
+using SGA.Persistence.Interfaces.Trips;
 
 namespace SGA.Application.Services.Trips
 {
     public class HorarioService : IHorarioService
     {
         private readonly IHorarioRepository _horarioRepository;
+        private readonly IRutaRepository _rutaRepository;
         private readonly IValidator<CreateHorarioDto> _createValidator;
         private readonly IValidator<UpdateHorarioDto> _updateValidator;
 
         public HorarioService(
             IHorarioRepository horarioRepository,
+            IRutaRepository rutaRepository,
             IValidator<CreateHorarioDto> createValidator,
             IValidator<UpdateHorarioDto> updateValidator)
         {
             _horarioRepository = horarioRepository;
+            _rutaRepository = rutaRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
@@ -81,6 +85,8 @@ namespace SGA.Application.Services.Trips
                 dto.HoraInicio
                 );
 
+            await ValidarRutaExistente(dto.RutaId);
+
             var horario = new Domain.Entities.Configuration.Horario
             {
                 RutaId = dto.RutaId,
@@ -125,6 +131,8 @@ namespace SGA.Application.Services.Trips
                 };
 
             }
+
+            await ValidarRutaExistente(dto.RutaId);
 
             horarioExistente.RutaId = dto.RutaId;
             horarioExistente.DiasOperacion = dto.DiasOperacion;
@@ -182,12 +190,23 @@ namespace SGA.Application.Services.Trips
         
         }
 
+        private async Task ValidarRutaExistente(int rutaId)
+        {
+            var ruta  = await _rutaRepository.GetByIdAsync(rutaId);
+
+            if(ruta == null)
+            {
+                throw new BusinessRuleException($"No existe una ruta con el ID {rutaId}");
+            }
+        }
+
         private HorarioDto MapToDto(Domain.Entities.Configuration.Horario horario)
         {
             return new HorarioDto
             {
                 Id = horario.Id,
                 RutaId = horario.RutaId,
+                RutaNombre = horario.Ruta?.Nombre,
                 DiasOperacion = horario.DiasOperacion,
                 HoraInicio = horario.HoraInicio,
                 HoraFin = horario.HoraFin

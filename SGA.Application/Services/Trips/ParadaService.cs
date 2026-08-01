@@ -10,15 +10,18 @@ namespace SGA.Application.Services.Configuration
     public class ParadaService : IParadaService
     {
         private readonly IParadaRepository _paradaRepository;
+        private readonly IRutaRepository _rutaRepository;
         private readonly IValidator<CreateParadaDto> _createValidator;
         private readonly IValidator<UpdateParadaDto> _updateValidator;
 
         public ParadaService(
             IParadaRepository paradaRepository,
+            IRutaRepository rutaRepository,
             IValidator<CreateParadaDto> createValidator,
             IValidator<UpdateParadaDto> updateValidator)
         {
             _paradaRepository = paradaRepository;
+            _rutaRepository = rutaRepository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
            
@@ -74,6 +77,8 @@ namespace SGA.Application.Services.Configuration
             }
             
             await ValidarParadaAsync(dto.Nombre);
+
+            await ValidarRutaExistente(dto.RutaId);
 
             if (dto.Nombre == null)
             {
@@ -131,6 +136,8 @@ namespace SGA.Application.Services.Configuration
                 };
             }
 
+            await ValidarRutaExistente(dto.RutaId);
+
             await ValidarParadaAsync(dto.Nombre,id);
 
             paradaExistente.RutaId = dto.RutaId;
@@ -175,6 +182,14 @@ namespace SGA.Application.Services.Configuration
             };
         }
 
+        private async Task ValidarRutaExistente(int rutaId)
+        {
+            var ruta = await _rutaRepository.GetByIdAsync(rutaId);
+            if(ruta == null)
+            {
+                throw new BusinessRuleException($"No existe una ruta con el ID {rutaId}");
+            }
+        }
 
         private async Task ValidarParadaAsync(string nombre, int? idExcluir = null)
         {
@@ -192,6 +207,7 @@ namespace SGA.Application.Services.Configuration
             return new ParadaDto
             {
                 Id = parada.Id,
+                RutaNombre = parada.Ruta?.Nombre,
                 Nombre = parada.Nombre,
                 Ubicacion = parada.Ubicacion,
                 OrdenParada = parada.OrdenParada,

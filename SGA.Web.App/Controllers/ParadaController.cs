@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SGA.Application.DTOs.Parada;
 using SGA.Application.DTOs.Ruta;
 using SGA.Application.Interfaces.Trips;
-using SGA.Domain.Enums;
+using SGA.Application.Exceptions;
 
 namespace SGA.Web.App.Controllers
 {
@@ -76,8 +76,9 @@ namespace SGA.Web.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex) 
             {
+                ViewBag.Error = ex.Message;
                 return View(parada);
             }
         }
@@ -134,8 +135,9 @@ namespace SGA.Web.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex) 
             {
+                ViewBag.Error = ex.Message;
                 ViewBag.Id = id;
                 return View(parada);
             }

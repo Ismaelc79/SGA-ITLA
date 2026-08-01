@@ -50,6 +50,14 @@ namespace SGA.Web.App.Controllers
         // GET: Ruta/Create
         public IActionResult Create()
         {
+            ViewBag.Estados = Enum.GetValues(typeof(EstadoRuta))
+           .Cast<EstadoRuta>()
+           .Select(e => new SelectListItem
+           {
+               Value = e.ToString(),
+               Text = e.ToString()
+           });
+
             return View(new CreateRutaDto());
         }
 
